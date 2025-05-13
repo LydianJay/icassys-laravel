@@ -86,4 +86,22 @@ class HumanResource extends Controller
 
     }
 
+
+
+    public function staff() {
+
+
+        return view('pages.human_resource.staff_directory');
+    }
+
+
+    public function staff_create_view() {
+
+
+
+
+        return view('pages.human_resource.staff_create');
+
+    }
+
 }

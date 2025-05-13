@@ -7,10 +7,13 @@ return [
         'menu'      => 'Human Resource',
         'icon'      => 'fa fa-sitemap ftlayer',
         'submenu'   => [
+            'Staff' => [
+                'route' => 'staff'
+            ],
             'Department' => [
                 'route' => 'department'
             ],
-            'Designation' => [
+            'Role' => [
                 'route' => 'designation'
             ],
             

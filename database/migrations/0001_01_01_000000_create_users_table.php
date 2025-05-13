@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('address')->nullable()->default(null);
             $table->string('img')->nullable()->default(null);
             $table->boolean('is_active')->default(true);
+            $table->string('e_contact')->nullable()->default(null);
+            $table->string('e_contact_no')->nullable()->default(null);
             $table->timestamp('email_verified_at')->nullable()->default(null);
             $table->string('password');
             $table->rememberToken()->nullable()->default(null);

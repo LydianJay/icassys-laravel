@@ -22,7 +22,7 @@
                         <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#create_modal">Create <span><i class="fa-solid fa-plus"></i></span></button>
                     </div>
                     <div class="col">
-                        <form action="{{ route('designation', ['search']) }}" method="get">
+                        <form action="{{ route('designation') }}" method="get">
 
                             <div class="input-group my-1">
                                 <input type="text" class="form-control" name="search" placeholder="Teacher..." value="{{ request()->input('search') }}">
@@ -41,7 +41,7 @@
                 <table class="table-responsive table table-striped">
                     <thead>
                         <tr class="text-center">
-                            <td>Designation</td>
+                            <td>Role</td>
                             <td >Action</td>
                         </tr>
                     </thead>
@@ -56,7 +56,7 @@
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
 
-                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" >
+                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn" role_id="{{$d->role_id}}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
 
@@ -100,7 +100,7 @@
         </div>
     </div>
 
-
+    
     {{-- Confirm Delete Modal --}}
     <div class="modal fade" id="confirm_delete_modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
@@ -110,7 +110,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger" onclick="window.location = '{{route('designation_delete', ['id' => $d->role_id])}}'; ">Delete</button>
+                    <a id="confirm_delete" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         </div>
@@ -152,6 +152,13 @@
                 let edit_modal = new bootstrap.Modal(document.getElementById('edit_modal'));
                 edit_modal.show();
             @endif
+
+            let delete_btn = document.getElementById('delete_btn');
+            delete_btn.addEventListener('click', function (){
+                let role_id = delete_btn.getAttribute('role_id');
+                const url =  "{{ route('designation_delete') }}" +  "?id=" + role_id;
+                document.getElementById('confirm_delete').setAttribute('href', url);
+            });
         });
     </script>
 
