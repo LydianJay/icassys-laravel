@@ -1,16 +1,14 @@
+@props(['edit_route'])
 
-
-@props(['create_route'])
-<div class="modal fade" id="create_modal" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="edit_modal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5">Create</h1>
+                <h1 class="modal-title fs-5">Edit</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route($create_route) }}" method="POST">
+            <form action="{{ route($edit_route) }}" method="POST">
                 @csrf
-
                 <div class="modal-body">
                     {{ $slot }}
                 </div>
