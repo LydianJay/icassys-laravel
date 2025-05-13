@@ -19,4 +19,6 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/hr/department', [HumanResource::class, 'department'])->name('department');
     Route::get('/hr/designation', [HumanResource::class, 'designation'])->name('designation');
     Route::post('/hr/designation/create', [HumanResource::class, 'designation_create'])->name('designation_create');
+    Route::post('/hr/designation/edit', [HumanResource::class, 'designation_edit'])->name('designation_edit');
+    Route::get('/hr/designation/delete', [HumanResource::class, 'designation_delete'])->name('designation_delete');
 });

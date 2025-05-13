@@ -25,11 +25,10 @@
                         <form action="{{ route('designation', ['search']) }}" method="get">
 
                             <div class="input-group my-1">
-                                    <input type="text" class="form-control" name="search" placeholder="Teacher..." value="{{ request()->input('search') }}">
-                                    <span class="input-group-text">
-                                        <button class="btn-sm btn p-0 border-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                    </span>
-                                
+                                <input type="text" class="form-control" name="search" placeholder="Teacher..." value="{{ request()->input('search') }}">
+                                <span class="input-group-text">
+                                    <button class="btn-sm btn p-0 border-0" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                </span>
                             </div>
                         </form>
 
@@ -43,7 +42,6 @@
                     <thead>
                         <tr class="text-center">
                             <td>Designation</td>
-                            <td># Personel</td>
                             <td >Action</td>
                         </tr>
                     </thead>
@@ -51,11 +49,17 @@
                         @foreach ($designations as $d)
                             <tr class="text-center">
                                 <td>{{ $d->role_name }}</td>
-                                <td>1</td>
                                 <td>
                                     <div class="d-flex flex-row justify-content-evenly align-items-center">
-                                        <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash"></i></button>
+
+                                        <button class="btn btn-sm btn-outline-secondary" onclick="window.location = '{{route('designation', ['id' => $d->role_id])}}'; ">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </button>
+
+                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+
                                     </div>
                                 </td>
                             </tr>
@@ -71,7 +75,7 @@
 
 
     
-   
+    {{-- Create Modal --}}
     <div class="modal fade" id="create_modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -92,9 +96,63 @@
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
+
+
+    {{-- Confirm Delete Modal --}}
+    <div class="modal fade" id="confirm_delete_modal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h1 class="modal-title fs-5">Delete Role?</h1>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger" onclick="window.location = '{{route('designation_delete', ['id' => $d->role_id])}}'; ">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {{-- Edit Modal --}}
+    @if(isset($edit))
+        <div class="modal fade" id="edit_modal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Edit</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ route('designation_edit') }}" method="POST">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <input type="number" name="id" hidden value="{{$edit->role_id}}">
+                                <input type="text" class="form-control" name="role_name" value="{{$edit->role_name}}" placeholder="Teacher II">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            @if(isset($edit))
+                let edit_modal = new bootstrap.Modal(document.getElementById('edit_modal'));
+                edit_modal.show();
+            @endif
+        });
+    </script>
 
 </x-dashboard.basecomponent>
