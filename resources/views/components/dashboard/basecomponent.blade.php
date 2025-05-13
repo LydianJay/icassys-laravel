@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>icastetuan</title>
+    <link href="{{asset('assets/school_content/admin_small_logo/1.png')}}" rel="shortcut icon" type="image/x-icon">
+
+
     <link href="{{ asset('assets/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.js') }}"></script>
     
@@ -12,12 +15,15 @@
 </head>
 <body>
     <div class="container-fluid px-0">
-        <nav class="navbar sticky-top bg-skin-blue shadow-lg">
+        <nav class="navbar sticky-top bg-skin-blue shadow-lg justify-content-start align-items-center">
             <div class="navbar-brand">
                 <img src="{{ asset('assets/school_content/admin_logo/1.png') }}" alt="logo" style="width: 72%;">
                 <a class="btn btn-outline-secondary fa-solid fa-bars bg-skin-blue text-white d-md-none d-inline-block" id="sidebarCollapse" aria-controls="offcanvasExample"></a>
+                
             </div>
-            
+            <div class="navbar-brand">
+                <h5 class="fs-4 m-0 text-white">{{ config('app.app_title') }}</h5>
+            </div>
         </nav>
         <div class="row m-0 ">
             <div class="col-lg-2 col-md-3 col-6 px-0 collapse collapse-horizontal show" id="sidebar">

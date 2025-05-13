@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
+    'app_title' => 'Immaculate Conception Archdiocesan School Tetuan',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

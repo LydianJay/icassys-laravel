@@ -41,7 +41,7 @@ return new class extends Migration
 
         Schema::create('role', function (Blueprint $table) { 
             $table->id('role_id');
-            $table->integer('role_name');
+            $table->string('role_name');
         });
 
         Schema::create('designation', function (Blueprint $table) { 

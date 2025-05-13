@@ -10,6 +10,9 @@ return [
             'Department' => [
                 'route' => 'department'
             ],
+            'Designation' => [
+                'route' => 'designation'
+            ],
             
         ],
     ],
