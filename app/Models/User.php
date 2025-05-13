@@ -29,10 +29,12 @@ class User extends Authenticatable
         'gender',
         'dob',
         'designation',
-        'username',
         'contactno',
         'address',
         'is_active',
+        'e_contact',
+        'e_contact_no',
+        'photo',
     ];
 
     /**

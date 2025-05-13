@@ -29,6 +29,6 @@ Route::middleware(['auth:web'])->group(function(){
 
 
     Route::get('/hr/staff', [HumanResource::class, 'staff'])->name('staff');
-    Route::get('/hr/staff_create_view', [HumanResource::class, 'staff_create_view'])->name('staff_create_view');
-
+    Route::get('/hr/staff/create_view', [HumanResource::class, 'staff_create_view'])->name('staff_create_view');
+    Route::post('/hr/staff/create', [HumanResource::class, 'staff_create'])->name('staff_create');
 });

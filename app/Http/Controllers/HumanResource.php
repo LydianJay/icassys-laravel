@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Department;
 use App\Models\Role;
+use App\Models\Staff;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
 class HumanResource extends Controller
 {
 
@@ -151,11 +155,77 @@ class HumanResource extends Controller
 
     public function staff_create_view() {
 
+        $data['dept'] = Department::all();
+        $data['role'] = Role::all();
 
 
+       
+        $data['staff_id'] = DB::table('staff')->max('staff_id') + 1;
 
-        return view('pages.human_resource.staff_create');
 
+        return view('pages.human_resource.staff_create', $data);
+    }
+
+
+    public function staff_create(Request $request) {
+
+        $validated = $request->validate([
+            'staff_id'      => 'required|integer|unique:staff,staff_id',
+            'username'      => 'required|max:64',
+            'role'          => 'required|exists:role,role_id',
+            'dept'          => 'required|exists:department,dept_id',
+            'join_date'     => 'required|date',
+            'fname'         => 'required|string|max:255',
+            'mname'         => 'nullable|string|max:255',
+            'lname'         => 'required|string|max:255',
+            'dob'           => 'required|date|before:today',
+            'address'       => 'required|string|max:500',
+            'gender'        => 'required|in:male,female,other',
+            'marital'       => 'required',
+            'e_contact'     => 'required|string|max:255',
+            'e_contact_no'  => 'required|string|max:15',
+            'file'          => 'nullable|file|mimes:jpg,jpeg,png|max:8192',
+        ]);
+
+        // dd($validated);
+ 
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = md5($validated['staff_id']);
+            $file->storeAs('uploads/staff', $filename, 'public');
+
+            $user = User::create([
+                'fname'         => $validated['fname'],
+                'lname'         => $validated['lname'],
+                'mname'         => $validated['mname'],
+                'dob'           => $validated['dob'],
+                'designation'   => 'staff',
+                'email'         => $validated['username'],
+                'password'      => bcrypt($validated['fname'] . $validated['lname']),
+                'join_date'     => $validated['join_date'],
+                'address'       => $validated['address'],
+                'gender'        => $validated['gender'],
+                'e_contact'     => $validated['e_contact'],
+                'e_contact_no'  => $validated['e_contact_no'],
+                'photo'         => $filename,
+            ]);
+            
+            Staff::create([
+                'staff_id'  => $validated['staff_id'],
+                'user_id'   => $user->id,
+                'dept_id'   => $validated['dept'],
+                'marital'   => $validated['marital'],
+                'join_date' => $validated['join_date'], 
+            ]);
+            return redirect()->route('staff_create_view')->with('status',['alert' => 'alert-info', 'msg' => 'User Created!'] );
+        }
+        else {
+            return redirect()->route('staff_create_view')->with('status',['alert' => 'alert-danger', 'msg' => 'Error Occured'] );
+        }
+        
+         
+
+        
     }
 
 }
