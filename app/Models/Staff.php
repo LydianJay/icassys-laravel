@@ -16,5 +16,18 @@ class Staff extends Model
         'marital',
         'join_date',
     ];
-    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'dept_id');
+    }
+
+    // public function designation()
+    // {
+    //     return $this->hasOne(Designation::class, 'staff_id');
+    // }
 }

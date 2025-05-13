@@ -148,8 +148,10 @@ class HumanResource extends Controller
 
     public function staff() {
 
-
-        return view('pages.human_resource.staff_directory');
+        $data['users'] = User::with('staff')->get();
+        
+        dd($data['users']);
+        return view('pages.human_resource.staff_directory', $data);
     }
 
 
@@ -192,7 +194,7 @@ class HumanResource extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $ext    = $file->getClientOriginalExtension();
-            $filename = md5($validated['staff_id']) . $ext;
+            $filename = md5($validated['staff_id']) . '.' . $ext;
             $file->storeAs('uploads/staff', $filename, 'public');
 
             $user = User::create([

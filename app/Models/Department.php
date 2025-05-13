@@ -14,4 +14,8 @@ class Department extends Model
         'dept_id',
         'dept_name',
     ];
+    public function staff()
+    {
+        return $this->hasMany(Staff::class, 'dept_id');
+    }
 }
