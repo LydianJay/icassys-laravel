@@ -191,7 +191,8 @@ class HumanResource extends Controller
  
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $filename = md5($validated['staff_id']);
+            $ext    = $file->getClientOriginalExtension();
+            $filename = md5($validated['staff_id']) . $ext;
             $file->storeAs('uploads/staff', $filename, 'public');
 
             $user = User::create([
