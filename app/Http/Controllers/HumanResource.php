@@ -148,12 +148,26 @@ class HumanResource extends Controller
 
     public function staff() {
 
-        $data['users'] = User::with('staff')->get();
+        $data['users'] = User::join('staff', 'staff.user_id','=','id')
+        ->join('department', 'department.dept_id', '=', 'staff.dept_id')
+        ->get();
         
-        dd($data['users']);
+        // dd($data['users']);
         return view('pages.human_resource.staff_directory', $data);
     }
 
+    public function staff_edit_view(Request $request) {
+
+        $data['dept'] = Department::all();
+        $data['role'] = Role::all();
+        $data['info'] = User::join('staff', 'staff.user_id','=','id')
+        ->join('department', 'department.dept_id', '=', 'staff.dept_id')
+        ->where('id', '=', $request->input('id'))
+        ->first();
+
+        // dd($data['info']);
+        return view('pages.human_resource.staff_edit', $data);
+    }
 
     public function staff_create_view() {
 
