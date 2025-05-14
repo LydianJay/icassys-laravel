@@ -150,6 +150,7 @@ class HumanResource extends Controller
 
         $data['users'] = User::join('staff', 'staff.user_id','=','id')
         ->join('department', 'department.dept_id', '=', 'staff.dept_id')
+        ->limit(12)
         ->get();
         
         // dd($data['users']);

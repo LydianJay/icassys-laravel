@@ -18,10 +18,6 @@
             background-color: #f1f3f9;
         }
 
-        .bg-skin-blue {
-            background-color: #002147 !important;
-        }
-
         .sidebar {
             min-height: 100vh;
             border-right: 1px solid #dee2e6;
@@ -79,7 +75,7 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg sticky-top bg-skin-blue shadow-sm px-3">
             <div class="d-flex align-items-center">
-                <img src="{{ asset('assets/school_content/admin_logo/1.png') }}" alt="logo" style="width: 40px;">
+                <img src="{{ asset('assets/school_content/admin_logo/1.png') }}" alt="logo" style="width: 60px;">
                 <h5 class="text-white mb-0 ms-3">{{ config('app.app_title') }}</h5>
             </div>
             <div class="ms-auto d-flex align-items-center">
