@@ -17,7 +17,7 @@ class Student extends Controller
         ->limit(12)
         ->get();
 
-        // dd($data['users']);
+        
 
         return view('pages.students.student', $data);
     }
@@ -25,12 +25,14 @@ class Student extends Controller
     public function student_edit_view(Request $request) {
 
 
-        $data['users'] = User::join('student', 'student.user_id','=','id')
+        $data['users'] = User::select('*', 'users.address as u_address')->join('student', 'student.user_id','=','id')
         ->join('guardian', 'guardian.guardian_id', '=', 'student.guardian_id')
         ->where('users.id', '=', $request->input('id'))
         ->first();
 
-        return view('pages.students.studentedit');
+        // dd($data['users']);
+
+        return view('pages.students.studentedit', $data);
     }
 
     public function student_create_view() {

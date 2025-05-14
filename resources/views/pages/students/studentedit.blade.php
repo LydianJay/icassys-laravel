@@ -11,25 +11,25 @@
                     <div class="col-md-3">
                         <label class="form-label">Admission No.</label>
                         <input type="text" name="admission_no" class="form-control"
-                            value="{{ old('admission_no') ? old('admission_no') : strtoupper(substr(hash('sha256', rand(1000, 9999) . now()->timestamp . Str::random(5)), 0, 6)) }}">
+                            value="{{ $users->admission_no }}">
                         @error('admission_no')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label">First Name</label>
-                        <input type="text" name="fname" class="form-control" value="{{ old('fname') }}">
+                        <input type="text" name="fname" class="form-control" value="{{ $users->fname }}">
                         @error('fname')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label">Middle Name</label>
-                        <input type="text" name="mname" class="form-control" value="{{ old('mname') }}">
+                        <input type="text" name="mname" class="form-control" value="{{ $users->mname }}">
                         @error('mname')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label">Last Name</label>
-                        <input type="text" name="lname" class="form-control" value="{{ old('lname') }}">
+                        <input type="text" name="lname" class="form-control" value="{{ $users->lname }}">
                         @error('lname')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                 <div class="row g-3 mt-1">
                     <div class="col-md-4">
                         <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}">
+                        <input type="email" name="email" class="form-control" value="{{ $users->email }}">
                         @error('email')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
 
@@ -45,7 +45,7 @@
                         <label class="form-label">Category</label>
                         <select name="category" class="form-select">
                             @foreach (['pre-school', 'elementary', 'junior-high', 'senior-high', 'college'] as $cat)
-                                <option value="{{ $cat }}">{{ ucwords(str_replace('-', ' ', $cat)) }}</option>
+                                <option {{ $users->category == $cat ? 'selected' : '' }} value="{{ $cat }}">{{ ucwords(str_replace('-', ' ', $cat)) }}</option>
                             @endforeach
                         </select>
                         @error('category')<small class="text-danger">{{ $message }}</small>@enderror
@@ -53,7 +53,7 @@
 
                     <div class="col-md-2">
                         <label class="form-label">Level (Grade/Year)</label>
-                        <input type="number" name="lvl" class="form-control" value="{{ old('lvl', 1) }}">
+                        <input type="number" name="lvl" class="form-control" value="{{ $users->lvl }}">
                         @error('lvl')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
 
@@ -61,7 +61,7 @@
                         <label class="form-label">Semester</label>
                         <select name="sem" class="form-select">
                             @foreach (['none', '1st', '2nd', 'summer'] as $sem)
-                                <option value="{{ $sem }}">{{ ucfirst($sem) }}</option>
+                                <option {{ $users->sem == $sem ? 'selected' : ''}} value="{{ $sem }}">{{ ucfirst($sem) }}</option>
                             @endforeach
                         </select>
                         @error('sem')<small class="text-danger">{{ $message }}</small>@enderror
@@ -70,9 +70,10 @@
                     <div class="col-md-2">
                         <label class="form-label">Gender</label>
                         <select name="gender" class="form-select">
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                            @foreach (['male', 'female', 'other'] as $g)
+                                <option {{ $users->gender == $g ? 'selected' : ''}}  value="{{$g}}">{{ucfirst($g)}}</option>
+                            @endforeach
+                           
                         </select>
                         @error('gender')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
@@ -81,17 +82,17 @@
                 <div class="row g-3 mt-1">
                     <div class="col-md-6">
                         <label class="form-label">Address</label>
-                        <input type="text" name="address" class="form-control" value="{{ old('address') }}">
+                        <input type="text" name="address" class="form-control" value="{{  $users->u_address  }}">
                         @error('address')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Contact No.</label>
-                        <input type="text" name="contactno" class="form-control" value="{{ old('contactno') }}">
+                        <input type="text" name="contactno" class="form-control" value="{{  $users->contactno  }}">
                         @error('contactno')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
                     <div class="col-md-3">
                         <label class="form-label">Date of Birth</label>
-                        <input type="date" name="dob" class="form-control" value="{{ old('dob') }}">
+                        <input type="date" name="dob" class="form-control" value="{{  $users->dob  }}">
                         @error('dob')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
                 </div>
@@ -103,7 +104,7 @@
                 <div class="row g-3">
                     <div class="col">
                         <label class="form-label">Guardian Name</label>
-                        <input type="text" name="guardian_name" class="form-control" value="{{ old('guardian_name') }}">
+                        <input type="text" name="guardian_name" class="form-control" value="{{  $users->name  }}">
                         @error('guardian_name')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
 
@@ -111,7 +112,7 @@
                         <label class="form-label">Relation</label>
                         <select name="relation" class="form-select">
                             @foreach (['parent', 'relative', 'guardian'] as $relation)
-                                <option value="{{ $relation }}" {{ old('relation') == $relation ? 'selected' : '' }}>
+                                <option value="{{ $relation }}" {{ $users->relation == $relation ? 'selected' : '' }}>
                                     {{ ucfirst($relation) }}
                                 </option>
                             @endforeach
@@ -121,7 +122,7 @@
 
                     <div class="col-md-3">
                         <label class="form-label">Contact No.</label>
-                        <input type="text" name="g_contactno" class="form-control" value="{{ old('g_contactno') }}">
+                        <input type="text" name="g_contactno" class="form-control" value="{{ $users->g_contactno }}">
                         @error('g_contactno')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
 
@@ -132,12 +133,12 @@
                     <div class="col-md-6">
                         <label class="form-label">Guardian Address</label>
                         <input type="text" name="guardian_address" class="form-control"
-                            value="{{ old('guardian_address') }}">
+                            value="{{ $users->address }}">
                         @error('guardian_address')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
                     <div class="col">
                         <label class="form-label">Occupation</label>
-                        <input type="text" name="occupation" class="form-control" value="{{ old('occupation') }}">
+                        <input type="text" name="occupation" class="form-control" value="{{ $users->occupation }}">
                         @error('occupation')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
                 </div>
