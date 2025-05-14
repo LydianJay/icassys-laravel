@@ -140,11 +140,11 @@
             });
 
             @foreach (config('menu') as $key => $menu)
-                const submenu = document.getElementById("submenu{{ $key }}");
-                submenu?.addEventListener('hide.bs.collapse', () => {
+                const submenu{{$key}} = document.getElementById("submenu{{ $key }}");
+                submenu{{$key}}?.addEventListener('hide.bs.collapse', () => {
                     document.getElementById('icon-item-{{ $key }}').classList.replace('fa-angle-down', 'fa-angle-left');
                 });
-                submenu?.addEventListener('show.bs.collapse', () => {
+                submenu{{$key}}?.addEventListener('show.bs.collapse', () => {
                     document.getElementById('icon-item-{{ $key }}').classList.replace('fa-angle-left', 'fa-angle-down');
                 });
             @endforeach
