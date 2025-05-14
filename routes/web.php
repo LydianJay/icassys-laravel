@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthCtrl;
 use App\Http\Controllers\CaptchaCtrl;
 use App\Http\Controllers\HumanResource;
 use App\Http\Controllers\Designation;
+use App\Http\Controllers\Maintenance;
+use App\Http\Controllers\Student;
 
 Route::get('/', [Site::class, 'index'])->name('home');
 Route::get('/login', [AuthCtrl::class, 'index'])->name('login');
@@ -15,6 +17,9 @@ Route::post('/login', [AuthCtrl::class, 'login'])->name('login.post');
 Route::get('/refresh-captcha', [CaptchaCtrl::class, 'refresh'])->name('refresh-captcha');
 
 Route::middleware(['auth:web'])->group(function(){
+
+    Route::get('/under_dev', [Maintenance::class, 'under_dev'])->name('under_dev');
+
     Route::get('/dashboard', [Site::class, 'dashboard'])->name('dashboard');
     Route::get('/hr/department', [HumanResource::class, 'department'])->name('department');
     Route::post('/hr/department/create', [HumanResource::class, 'department_create'])->name('department_create');
@@ -33,4 +38,6 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/hr/staff/edit_view', [HumanResource::class, 'staff_edit_view'])->name('staff_edit_view');
     Route::post('/hr/staff/create', [HumanResource::class, 'staff_create'])->name('staff_create');
 
+
+    Route::get('/student/student', [Student::class, 'student'])->name('student');
 });

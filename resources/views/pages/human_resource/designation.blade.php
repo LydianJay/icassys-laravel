@@ -15,7 +15,7 @@
 
                 
                 
-                <h5>Designation</h5>
+                <h5>Role</h5>
                 <div class="row mt-3 align-items-center">
                     <div class="col">
                         <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#create_modal">Create <span><i class="fa-solid fa-plus"></i></span></button>
