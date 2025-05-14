@@ -28,7 +28,6 @@ class User extends Authenticatable
         'lname',
         'gender',
         'dob',
-        'designation',
         'contactno',
         'address',
         'is_active',

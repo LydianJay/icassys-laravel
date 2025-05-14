@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('lname');
             $table->enum('gender', ['male', 'female', 'other'])->default('other');
             $table->date('dob');
-            $table->enum('designation', ['admin', 'staff', 'student', 'parent'])->default('student');
             $table->string('contactno')->nullable()->default(null);
             $table->string('address')->nullable()->default(null);
             $table->boolean('is_active')->default(true);

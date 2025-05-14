@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('staff', function (Blueprint $table) { 
             $table->id('staff_id');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('dept_id')->constrained('department', 'dept_id')->onDelete('cascade');
+            $table->foreignId('dept_id')->nullable()->constrained('department', 'dept_id')->onDelete('cascade');
             $table->enum('marital', ['single', 'married', 'separated', 'widowed', 'not specified'])->default('not specified');
             $table->date('join_date')->useCurrent();
         });

@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Role;
 use App\Models\Staff;
 use App\Models\User;
+use App\Models\Designation;
 use Illuminate\Support\Facades\DB;
 
 class HumanResource extends Controller
@@ -217,7 +218,6 @@ class HumanResource extends Controller
                 'lname'         => $validated['lname'],
                 'mname'         => $validated['mname'],
                 'dob'           => $validated['dob'],
-                'designation'   => 'staff',
                 'email'         => $validated['username'],
                 'password'      => bcrypt($validated['fname'] . $validated['lname']),
                 'join_date'     => $validated['join_date'],
@@ -228,13 +228,19 @@ class HumanResource extends Controller
                 'photo'         => $filename,
             ]);
             
-            Staff::create([
+            $staff = Staff::create([
                 'staff_id'  => $validated['staff_id'],
                 'user_id'   => $user->id,
                 'dept_id'   => $validated['dept'],
                 'marital'   => $validated['marital'],
                 'join_date' => $validated['join_date'], 
             ]);
+
+            Designation::create([
+                'role_id'   => $validated['role'],
+                'staff_id'  => $staff->staff_id,
+            ]);
+
             return redirect()->route('staff_create_view')->with('status',['alert' => 'alert-info', 'msg' => 'User Created!'] );
         }
         else {
