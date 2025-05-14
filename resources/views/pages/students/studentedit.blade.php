@@ -2,8 +2,9 @@
     <x-dashboard.cardcomponent>
         <x-dashboard.cardheader title="" />
 
-        <form action="{{ route('student_create') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('student_edit') }}" method="POST" enctype="multipart/form-data">
             @csrf
+            <input type="number" hidden name="id" value="{{ $users->id }}">
             <div class="card-body">
                 {{-- STUDENT SECTION --}}
                 <h5 class="mb-3">Student Information</h5>
@@ -152,7 +153,7 @@
                 @error('file')<small class="text-danger">{{ $message }}</small>@enderror
 
                 <button class="btn btn-success mt-2" type="submit">
-                    <i class="fa fa-plus-circle me-1"></i> Add Student
+                    <i class="fa fa-plus-circle me-1"></i> Save
                 </button>
             </div>
         </form>

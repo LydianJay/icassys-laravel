@@ -8,6 +8,8 @@ use App\Models\Guardian;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use App\Models\student as StudentModel;
+use Illuminate\Support\Facades\DB;
 class Student extends Controller
 {
     public function student() {
@@ -35,7 +37,86 @@ class Student extends Controller
         return view('pages.students.studentedit', $data);
     }
 
-    public function student_create_view() {
+
+    public function student_edit(Request $request) {
+
+        $request->validate([
+                
+            'admission_no' => 'required',
+            'fname' => 'required',
+            'mname' => 'nullable',
+            'lname' => 'required',
+            'email' => 'required|email',
+            'category' => 'required',
+            'lvl' => 'required|numeric',
+            'sem' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'contactno' => 'required',
+            'dob' => 'required|date',
+            'guardian_name' => 'required',
+            'relation' => 'required',
+            'g_contactno' => 'required',
+            'guardian_address' => 'required',
+            'occupation' => 'required',
+            'file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'id' => 'required',
+        ]);
+
+
+        DB::beginTransaction();
+
+        try {
+            $user = User::findOrFail($request->input('id'));
+            $user->fname = $request->fname;
+            $user->mname = $request->mname;
+            $user->lname = $request->lname;
+            $user->email = $request->email;
+            $user->gender = $request->gender;
+            $user->address = $request->address;
+            $user->contactno = $request->contactno;
+            $user->dob = $request->dob;
+
+            $photoPath = null;
+            
+
+            
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $ext    = $file->getClientOriginalExtension();
+                $photoPath = md5($request->input('admission_no')) . '.' . $ext;
+                $file->storeAs('uploads/student/photos', $photoPath, 'public');
+            }
+
+            $user->save();
+
+            $student = StudentModel::where('user_id', $user->id)->first();
+            $student->admission_no = $request->admission_no;
+            $student->category = $request->category;
+            $student->lvl = $request->lvl;
+            $student->sem = $request->sem;
+            $student->save();
+
+            $guardian = Guardian::findOrFail($student->guardian_id);
+            $guardian->name = $request->guardian_name;
+            $guardian->relation = $request->relation;
+            $guardian->g_contactno = $request->g_contactno;
+            $guardian->address = $request->guardian_address;
+            $guardian->occupation = $request->occupation;
+            $guardian->save();
+
+            DB::commit();
+
+            return redirect()->back()->with('status',['alert' => 'alert-info', 'msg' => 'Student Edited!']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('status',['alert' => 'alert-warning', 'msg' => $e->getMessage()]);
+        }
+
+
+    }
+
+    public function student_create_view(Request $request) {
 
 
         return view('pages.students.studentcreate');
