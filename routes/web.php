@@ -42,4 +42,7 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/student/student', [Student::class, 'student'])->name('student');
     Route::get('/student/student_create_view', [Student::class, 'student_create_view'])->name('student_create_view');
     Route::post('/student/student_create', [Student::class, 'student_create'])->name('student_create');
+    Route::get('/student/student_edit_view', [Student::class, 'student_edit_view'])->name('student_edit_view');
+    Route::get('/student/student_delete', [Student::class, 'student_delete'])->name('student_delete');
+   
 });

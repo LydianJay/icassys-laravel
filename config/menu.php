@@ -31,9 +31,9 @@ return [
             'Students' => [
                 'route' => 'student'
             ],
-            'Enrollment' => [
-                'route' => 'under_dev'
-            ],
+            // 'Enrollment' => [
+            //     'route' => 'under_dev'
+            // ],
             
         ],
     ],

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Department;
 use App\Models\Designation;
 use App\Models\Modules;
 use App\Models\Permission;
@@ -27,8 +28,8 @@ class DatabaseSeeder extends Seeder
 
         $user = User::create([
             
-            'email'     => 'admin@example.com',
-            'password'  => bcrypt('admin123'),
+            'email'     => 'netsysad@icastetuan.edu.ph',
+            'password'  => bcrypt('Ec1088944*#'),
             'fname'     => 'Admin',
             'mname'     => 'Admin',
             'lname'     => 'Admin',
@@ -37,9 +38,14 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $dept = Department::create([
+            'dept_name' => 'Super Admin'
+        ]);
+
         $staff = Staff::create([
             'user_id'   => $user->id,
-            'join_date' => now()->toDateString()
+            'join_date' => now()->toDateString(),
+            'dept_id'   => $dept->dept_id,
         ]);
 
         Designation::create([

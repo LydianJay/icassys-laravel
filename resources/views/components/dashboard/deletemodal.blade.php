@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <h1 class="modal-title fs-5">Delete Role?</h1>
+                <h1 class="modal-title fs-5">Are you sure?</h1>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

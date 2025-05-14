@@ -151,6 +151,8 @@ class HumanResource extends Controller
 
         $data['users'] = User::join('staff', 'staff.user_id','=','id')
         ->join('department', 'department.dept_id', '=', 'staff.dept_id')
+        ->join('designation', 'designation.staff_id', '=', 'staff.staff_id')
+        ->join('role', 'role.role_id', '=', 'designation.role_id')
         ->limit(12)
         ->get();
         
@@ -206,50 +208,45 @@ class HumanResource extends Controller
         ]);
 
         // dd($validated);
- 
+        $filename = null;
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $ext    = $file->getClientOriginalExtension();
             $filename = md5($validated['staff_id']) . '.' . $ext;
             $file->storeAs('uploads/staff', $filename, 'public');
 
-            $user = User::create([
-                'fname'         => $validated['fname'],
-                'lname'         => $validated['lname'],
-                'mname'         => $validated['mname'],
-                'dob'           => $validated['dob'],
-                'email'         => $validated['username'],
-                'password'      => bcrypt($validated['fname'] . $validated['lname']),
-                'join_date'     => $validated['join_date'],
-                'address'       => $validated['address'],
-                'gender'        => $validated['gender'],
-                'e_contact'     => $validated['e_contact'],
-                'e_contact_no'  => $validated['e_contact_no'],
-                'photo'         => $filename,
-            ]);
-            
-            $staff = Staff::create([
-                'staff_id'  => $validated['staff_id'],
-                'user_id'   => $user->id,
-                'dept_id'   => $validated['dept'],
-                'marital'   => $validated['marital'],
-                'join_date' => $validated['join_date'], 
-            ]);
-
-            Designation::create([
-                'role_id'   => $validated['role'],
-                'staff_id'  => $staff->staff_id,
-            ]);
-
-            return redirect()->route('staff_create_view')->with('status',['alert' => 'alert-info', 'msg' => 'User Created!'] );
         }
-        else {
-            return redirect()->route('staff_create_view')->with('status',['alert' => 'alert-danger', 'msg' => 'Error Occured'] );
-        }
-        
-         
 
+
+        $user = User::create([
+            'fname'         => $validated['fname'],
+            'lname'         => $validated['lname'],
+            'mname'         => $validated['mname'],
+            'dob'           => $validated['dob'],
+            'email'         => $validated['username'],
+            'password'      => bcrypt($validated['fname'] . $validated['lname']),
+            'join_date'     => $validated['join_date'],
+            'address'       => $validated['address'],
+            'gender'        => $validated['gender'],
+            'e_contact'     => $validated['e_contact'],
+            'e_contact_no'  => $validated['e_contact_no'],
+            'photo'         => $filename,
+        ]);
         
+        $staff = Staff::create([
+            'staff_id'  => $validated['staff_id'],
+            'user_id'   => $user->id,
+            'dept_id'   => $validated['dept'],
+            'marital'   => $validated['marital'],
+            'join_date' => $validated['join_date'], 
+        ]);
+
+        Designation::create([
+            'role_id'   => $validated['role'],
+            'staff_id'  => $staff->staff_id,
+        ]);
+
+        return redirect()->route('staff_create_view')->with('status',['alert' => 'alert-info', 'msg' => 'User Created!'] );
     }
 
 }

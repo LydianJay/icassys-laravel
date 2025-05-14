@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>icastetuan</title>
+    <title>Home</title>
+    <link rel="shortcut icon" href="{{ asset('assets/school_content/admin_small_logo/1.png') }}" type="image/x-icon">
+
     <link href="{{ asset('assets/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.js') }}"></script>
 

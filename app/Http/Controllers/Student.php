@@ -12,10 +12,26 @@ class Student extends Controller
 {
     public function student() {
         
+        $data['users'] = User::join('student', 'student.user_id','=','id')
+        ->join('guardian', 'guardian.guardian_id', '=', 'student.guardian_id')
+        ->limit(12)
+        ->get();
 
-        return view('pages.students.student');
+        // dd($data['users']);
+
+        return view('pages.students.student', $data);
     }
 
+    public function student_edit_view(Request $request) {
+
+
+        $data['users'] = User::join('student', 'student.user_id','=','id')
+        ->join('guardian', 'guardian.guardian_id', '=', 'student.guardian_id')
+        ->where('users.id', '=', $request->input('id'))
+        ->first();
+
+        return view('pages.students.studentedit');
+    }
 
     public function student_create_view() {
 
@@ -24,9 +40,23 @@ class Student extends Controller
     }
 
 
+    public function student_delete(Request $request) {
+
+        $data = $request->input('id');
+        $user = User::join('student', 'student.user_id','=','id')
+        ->join('guardian', 'guardian.guardian_id', '=', 'student.guardian_id')
+        ->where('users.id', '=', $data)
+        ->first();
+        Guardian::destroy($user->guardian_id);
+        User::destroy($data);
+
+        return redirect()->route('student')->with('status',['alert' => 'alert-warning', 'msg' => 'Student deleted!'] );
+
+    }
+
     public function student_create(Request $request) {
 
-        $request->validate([
+        $validated = $request->validate([
             // Student validation
             'admission_no' => 'required|string|unique:student,admission_no',
             'fname'        => 'required|string|max:100',
@@ -40,7 +70,7 @@ class Student extends Controller
             'category'     => 'required|string',
             'lvl'          => 'required|numeric',
             'sem'          => 'required|string',
-            'file'         => 'nullable|image|max:2048',
+            'file'         => 'nullable|image|max:8192',
     
             // Guardian validation
             'guardian_name'     => 'required|string|max:150',
@@ -52,10 +82,17 @@ class Student extends Controller
     
         // Handle student photo upload
         $photoPath = null;
+        
+
+        
         if ($request->hasFile('file')) {
-            $photoPath = $request->file('file')->store('student/photos', 'public');
+            $file = $request->file('file');
+            $ext    = $file->getClientOriginalExtension();
+            $photoPath = md5($validated['admission_no']) . '.' . $ext;
+            $file->storeAs('uploads/student/photos', $photoPath, 'public');
         }
         
+        // dd($photoPath);
         $fullName       = strtolower($request->input('fname') . $request->input('mname') . $request->input('lname'));
         $rawPassword    = substr(md5($fullName), 0, 10);
         $hashedPassword = Hash::make($rawPassword);
