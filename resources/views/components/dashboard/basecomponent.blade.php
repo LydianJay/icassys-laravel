@@ -1,137 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>icastetuan</title>
-    <link href="{{asset('assets/school_content/admin_small_logo/1.png')}}" rel="shortcut icon" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('assets/school_content/admin_small_logo/1.png') }}" type="image/x-icon">
 
-
+    <!-- Bootstrap + Font Awesome -->
     <link href="{{ asset('assets/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
     <script src="{{ asset('assets/bootstrap/js/bootstrap.bundle.js') }}"></script>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        crossorigin="anonymous" />
+
+    <style>
+        body {
+            background-color: #f1f3f9;
+        }
+
+        .bg-skin-blue {
+            background-color: #002147 !important;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            border-right: 1px solid #dee2e6;
+        }
+
+        .sidebar .list-group-item {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        .sidebar .list-group-item:hover,
+        .sidebar .list-group-item.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .sidebar .submenu .list-group-item {
+            padding-left: 1.5rem;
+            background-color: #003366;
+            border-radius: 4px;
+        }
+
+        .sidebar a {
+            color: white;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        .dashboard-card {
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            background-color: white;
+            padding: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        .navbar .btn-logout {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+        }
+
+        .navbar .btn-logout:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+    </style>
 </head>
+
 <body>
     <div class="container-fluid px-0">
-        <nav class="navbar sticky-top bg-skin-blue shadow-lg justify-content-start align-items-center">
-            <div class="navbar-brand">
-                <img src="{{ asset('assets/school_content/admin_logo/1.png') }}" alt="logo" style="width: 72%;">
-                <a class="btn btn-outline-secondary fa-solid fa-bars bg-skin-blue text-white d-md-none d-inline-block" id="sidebarCollapse" aria-controls="offcanvasExample"></a>
-                
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg sticky-top bg-skin-blue shadow-sm px-3">
+            <div class="d-flex align-items-center">
+                <img src="{{ asset('assets/school_content/admin_logo/1.png') }}" alt="logo" style="width: 40px;">
+                <h5 class="text-white mb-0 ms-3">{{ config('app.app_title') }}</h5>
             </div>
-            <div class="navbar-brand">
-                <h5 class="fs-4 m-0 text-white">{{ config('app.app_title') }}</h5>
+            <div class="ms-auto d-flex align-items-center">
+                <!-- Logout Button -->
+                <form method="POST" action="">
+                    @csrf
+                    <button type="submit" class="btn btn-logout me-2">
+                        <i class="fa fa-sign-out-alt me-1"></i> Sign Out
+                    </button>
+                </form>
+                <!-- Mobile Toggle -->
+                <button class="btn btn-outline-light d-lg-none" id="sidebarToggle">
+                    <i class="fa fa-bars"></i>
+                </button>
             </div>
         </nav>
-        <div class="row m-0 ">
-            <div class="col-lg-2 col-md-3 col-6 px-0 collapse collapse-horizontal show" id="sidebar">
-                <div class="collapse show collapse-horizontal bg-skin-blue vh-100" id="myCollapse">
-                    <ul class="list-group p-2">
 
-
-                        @foreach (config('menu') as $key => $menu)
-
-                            <li class="fs-8 text-nowrap list-group-item d-flex justify-content-between align-items-center my-1" id="menu{{$key}}"
-                                data-bs-toggle="collapse" data-bs-target="#submenu{{$key}}">
-                                <span > <i class="{{ $menu['icon'] }}"></i></span>
-                                {{ $menu['menu'] }}
-                                <span> <i class="fa fa-angle-left" id="icon-item-{{$key}}"></i></span>
-                            </li>
-
-                            @if(!empty($menu['submenu'])) 
-                                <ul class="list-group collapse my-2 px-2" id="submenu{{$key}}">
-                                    @foreach ($menu['submenu'] as $key => $item)
-                                        <li class="list-group-item border my-1 text-white bg-skin-blue"><a href="{{ route($item['route']) }}" class="text-decoration-none text-white fs-6">{{ $key }}</a></li>
-                                    @endforeach
-                                </ul>
-                            @endif
-
-                        @endforeach
-
-                        
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col">
-                {{ $slot }}
-            </div>
-        </div>
-
-    </div>
-    
-
-    
-
-
-    {{-- <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <div>
-                Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists,
-                etc.
-            </div>
-            <div class="dropdown mt-3">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                    Dropdown button
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+        <div class="row g-0">
+            <!-- Sidebar -->
+            <div class="col-lg-2 col-md-3 bg-skin-blue sidebar d-none d-md-block" id="sidebar">
+                <ul class="list-group p-3">
+                    @foreach (config('menu') as $key => $menu)
+                        <li class="list-group-item d-flex justify-content-between align-items-center"
+                            data-bs-toggle="collapse" data-bs-target="#submenu{{ $key }}">
+                            <span><i class="{{ $menu['icon'] }} me-2"></i> {{ $menu['menu'] }}</span>
+                            <i class="fa fa-angle-left" id="icon-item-{{ $key }}"></i>
+                        </li>
+                        @if(!empty($menu['submenu']))
+                            <ul class="list-group collapse submenu my-1" id="submenu{{ $key }}">
+                                @foreach ($menu['submenu'] as $subKey => $item)
+                                    <li class="list-group-item my-1">
+                                        <a href="{{ route($item['route']) }}" class="text-decoration-none">{{ $subKey }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
+
+            <!-- Main Content -->
+            <div class="col px-4 py-4">
+                <div class="dashboard-card">
+                    {{ $slot }}
+                </div>
+            </div>
         </div>
-    </div> --}}
-    
+    </div>
+
+    <!-- Sidebar Toggle Script -->
     <script>
-       document.addEventListener('DOMContentLoaded', function () {
-            let sidebarCollapse = document.getElementById('sidebarCollapse');
-            let sidebar = document.getElementById('sidebar');
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebarToggle = document.getElementById('sidebarToggle');
+            const sidebar = document.getElementById('sidebar');
 
-            sidebarCollapse.addEventListener('click', function () {
+            sidebarToggle?.addEventListener('click', function () {
+                sidebar.classList.toggle('d-none');
+            });
 
-               if (sidebar.classList.contains('d-none')) {
-                   sidebar.classList.remove('d-none');
-               } else {
-                   sidebar.classList.add('d-none');
-               }
-               console.log('click');
-               const bsCollapse = new bootstrap.Collapse('#sidebar', {
-                   toggle: true
-               });
-           });
-
-           @foreach (config('menu') as $key => $menu)
-
-               let menu_item_{{$key}} = document.getElementById("submenu{{$key}}");
-
-               menu_item_{{$key}}.addEventListener('hide.bs.collapse', () => {
-                   let icon = document.getElementById('icon-item-{{$key}}');
-                   let menu = document.getElementById('menu{{$key}}');
-                   menu.classList.remove('active');
-                   icon.classList.remove('fa-angle-down');
-                   icon.classList.add('fa-angle-left');
-               });
-
-
-               menu_item_{{$key}}.addEventListener('show.bs.collapse', () => {
-                   let icon = document.getElementById('icon-item-{{$key}}');
-                   let menu = document.getElementById('menu{{$key}}');
-                   menu.classList.add('active');
-                   icon.classList.remove('fa-angle-left');
-                   icon.classList.add('fa-angle-down');
-               });
-
-           @endforeach
-
-
+            @foreach (config('menu') as $key => $menu)
+                const submenu = document.getElementById("submenu{{ $key }}");
+                submenu?.addEventListener('hide.bs.collapse', () => {
+                    document.getElementById('icon-item-{{ $key }}').classList.replace('fa-angle-down', 'fa-angle-left');
+                });
+                submenu?.addEventListener('show.bs.collapse', () => {
+                    document.getElementById('icon-item-{{ $key }}').classList.replace('fa-angle-left', 'fa-angle-down');
+                });
+            @endforeach
         });
     </script>
 </body>
+
 </html>

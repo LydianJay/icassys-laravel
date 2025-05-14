@@ -2,7 +2,6 @@
     <div class="container-fluid px-1 py-2">
         
     
-        <div class="card shadow-lg">
     
             <div class="card-header">
                 
@@ -68,7 +67,6 @@
                 </table>
             </div>
     
-        </div>
     
     
     </div>

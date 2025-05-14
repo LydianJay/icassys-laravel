@@ -1,172 +1,128 @@
 <x-dashboard.basecomponent>
-
     <x-dashboard.cardcomponent>
-        <x-dashboard.cardheader title="Basic Information">
+        <x-dashboard.cardheader title="Basic Information" />
 
-           
-        </x-dashboard.cardheader>
-        <form action="{{route('staff_create')}}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('staff_create') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
-                <div class="row">
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Staff ID</label>
-                        <input type="number" name="staff_id" class="form-control p-1" value="{{$staff_id}}">
-                        @error('staff_id')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Staff ID</label>
+                        <input type="number" name="staff_id" class="form-control" value="{{ $staff_id }}">
+                        @error('staff_id')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Username</label>
-                        <input type="text" name="username" class="form-control p-1" value="{{old('username')}}"
-                            placeholder="juan@example.com">
-                        @error('username')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="col-md-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="juan@example.com"
+                            value="{{ old('username') }}">
+                        @error('username')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Contact No.</label>
-                        <input type="text" name="contactno" class="form-control p-1" value="{{old('contactno')}}">
-                        @error('contactno')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="col-md-3">
+                        <label class="form-label">Contact No.</label>
+                        <input type="text" name="contactno" class="form-control" value="{{ old('contactno') }}">
+                        @error('contactno')<small class="text-danger">{{ $message }}</small>@enderror
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Date of Birth</label>
+                        <input type="date" name="dob" class="form-control" value="{{ old('dob') }}">
+                        @error('dob')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
                 </div>
 
-                <div class="row my-1">
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">First Name</label>
-                        <input type="text" name="fname" class="form-control p-1" value="{{old('fname')}}">
-                        @error('fname')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                <div class="row g-3 mt-1">
+                    <div class="col-md-3">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="fname" class="form-control" value="{{ old('fname') }}">
+                        @error('fname')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Middle Name</label>
-                        <input type="text" name="mname" class="form-control p-1" value="{{old('mname')}}">
-                        @error('mname')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="col-md-3">
+                        <label class="form-label">Middle Name</label>
+                        <input type="text" name="mname" class="form-control" value="{{ old('mname') }}">
+                        @error('mname')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Last Name</label>
-                        <input type="text" name="lname" class="form-control p-1" value="{{old('lname')}}">
-                        @error('lname')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="col-md-3">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="lname" class="form-control" value="{{ old('lname') }}">
+                        @error('lname')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Marital Status</label>
-                        <select name="marital" class="form-select" value="{{old('marital')}}">
+                    <div class="col-md-3">
+                        <label class="form-label">Marital Status</label>
+                        <select name="marital" class="form-select">
                             <option value="single">Single</option>
                             <option value="married">Married</option>
                             <option value="separated">Separated</option>
                             <option value="widowed">Widowed</option>
                             <option value="not specified">Not specified</option>
                         </select>
-                        @error('marital')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                        @error('marital')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    
                 </div>
 
-                <div class="row my-2">
-                    
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Role</label>
-                        <select name="role" class="form-select" value="{{old('role')}}">
+                <div class="row g-3 mt-1">
+                    <div class="col-md-3">
+                        <label class="form-label">Role</label>
+                        <select name="role" class="form-select">
                             @foreach ($role as $r)
-                                <option value="{{$r->role_id}}">{{ $r->role_name}}</option>
+                                <option value="{{ $r->role_id }}">{{ $r->role_name }}</option>
                             @endforeach
                         </select>
-                        @error('role')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                        @error('role')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Department</label>
-                        <select name="dept" class="form-select" value="{{old(key: 'dept')}}">
+                    <div class="col-md-3">
+                        <label class="form-label">Department</label>
+                        <select name="dept" class="form-select">
                             @foreach ($dept as $d)
-                                <option value="{{$d->dept_id}}">{{ $d->dept_name}}</option>
+                                <option value="{{ $d->dept_id }}">{{ $d->dept_name }}</option>
                             @endforeach
                         </select>
-                        @error('dept')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                        @error('dept')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Date of Birth</label>
-                        <input type="date" name="dob" class="form-control p-1" value="{{old('dob')}}">
-                        @error('dob')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                    <div class="col-md-3">
+                        <label class="form-label">Date of Joining</label>
+                        <input type="date" name="join_date" class="form-control" value="{{ old('join_date') }}">
+                        @error('join_date')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Date of Joining</label>
-                        <input type="date" name="join_date" class="form-control p-1" value="{{old('join_date')}}" >
-                        @error('join_date')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>        
-                </div>
-
-
-                
-
-                <div class="row my-1">
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Address</label>
-                        <input type="text" name="address" class="form-control p-1" value="{{old('address')}}">
-                        @error('address')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Gender</label>
-                        <select name="gender" class="form-select" value="{{old('gender')}}">
+                    <div class="col-md-3">
+                        <label class="form-label">Gender</label>
+                        <select name="gender" class="form-select">
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
-                        @error('gender')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
+                        @error('gender')<small class="text-danger">{{ $message }}</small>@enderror
                     </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Emergency Contact Person</label>
-                        <input type="text" name="e_contact" class="form-control p-1" value="{{old('e_contact')}}">
-                        @error('e_contact')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    <div class="col-6 col-lg-3">
-                        <label class="form-label mb-0">Emergency Contact No.</label>
-                        <input type="text" name="e_contact_no" class="form-control p-1" value="{{old('e_contact_no')}}">
-                        @error('e_contact_no')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                    
                 </div>
-                
+
+                <div class="row g-3 mt-1">
+                    <div class="col-md-6">
+                        <label class="form-label">Address</label>
+                        <input type="text" name="address" class="form-control" value="{{ old('address') }}">
+                        @error('address')<small class="text-danger">{{ $message }}</small>@enderror
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Emergency Contact Person</label>
+                        <input type="text" name="e_contact" class="form-control" value="{{ old('e_contact') }}">
+                        @error('e_contact')<small class="text-danger">{{ $message }}</small>@enderror
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Emergency Contact No.</label>
+                        <input type="text" name="e_contact_no" class="form-control" value="{{ old('e_contact_no') }}">
+                        @error('e_contact_no')<small class="text-danger">{{ $message }}</small>@enderror
+                    </div>
+                </div>
             </div>
+
             <div class="card-footer">
-
-                <h5 class="my-2">Photo</h5>
-                <div class="input-group my-3">
-                    <input type="file" name="file" class="form-control" value="{{old('file')}}">  
-                    @error('file')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-
+                <h5 class="my-3">Upload Photo</h5>
                 <div class="input-group mb-3">
-                   <button class="btn btn-success btn-sm" type="submit">Add</button>
+                    <input type="file" name="file" class="form-control">
                 </div>
+                @error('file')<small class="text-danger">{{ $message }}</small>@enderror
 
+                <button class="btn btn-success mt-2" type="submit">
+                    <i class="fa fa-plus-circle me-1"></i> Add Staff
+                </button>
             </div>
-        </form> 
-
+        </form>
     </x-dashboard.cardcomponent>
 </x-dashboard.basecomponent>

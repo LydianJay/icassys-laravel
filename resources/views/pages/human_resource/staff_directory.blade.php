@@ -1,89 +1,80 @@
 <x-dashboard.basecomponent>
-    
-   <x-dashboard.cardcomponent>
+    <x-dashboard.cardcomponent>
         <x-dashboard.cardheader title="Staff">
-
             <div class="row">
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-success" href="{{ route('staff_create_view') }}">Create <span><i class="fa-solid fa-plus"></i></span></a>
+                    <a class="btn btn-sm btn-outline-success" href="{{ route('staff_create_view') }}">
+                        Create <span><i class="fa-solid fa-plus"></i></span>
+                    </a>
                 </div>
                 <div class="col">
-                    <x-dashboard.cardsearchbar search_route="staff" placeholder="Juan Dela Cruz"> </x-dashboard.cardsearchbar>
+                    <x-dashboard.cardsearchbar search_route="staff" placeholder="Juan Dela Cruz" />
                 </div>
             </div>
         </x-dashboard.cardheader>
 
         <div class="card-body">
-            @for  ($i = 0; $i < count($users); $i += 2)
-                                                                                                                                                                @php
-                $p1 = $users[$i];
-                $p2 = isset($users[$i + 1]) ? $users[$i + 1] : null;
-                                                                                                                                                                @endphp
-
+            <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="card card-body shadow-lg">
-                            <div class="row">
-                                <div class="col">
+                    @for($i = 0; $i < count($users); $i += 2)
+                        @php
+                            $p1 = $users[$i];
+                            $p2 = $users[$i + 1] ?? null;
+                        @endphp
 
-                                    <img class="border rounded-1 mx-3" src="{{ asset('storage/uploads/staff/' . $p1->photo) }}" alt="Profile"
-                                        style="width: calc(15vh); height: calc(15vh);">
-                                    <a href="{{ route('staff_edit_view', ['id' => $p1->id])  }}"><i class="fa-solid fa-pen-to-square mt-2 mx-3"></i></a>
-                                    <a href="" class=""><i class="fa-solid fa-trash"></i></a>
-                                </div>
-                                <div class="col d-flex flex-column justify-content-start">
-
-                                    <p class="fs-6 ms-2">{{ $p1->fname . ' ' . $p1->mname . ' ' . $p1->lname }}</p>
-                                    <p class="fs-5 ms-2 mb-0">{{ $p1->dept_name }}</p>
-                                    <p class="fs-5 ms-2">IT Admin</p>
+                        {{-- First Card --}}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex align-items-center">
+                                    <img src="{{ asset('storage/uploads/staff/' . $p1->photo) }}" alt="Profile"
+                                        class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">{{ $p1->fname }} {{ $p1->mname }} {{ $p1->lname }}</h6>
+                                        <p class="mb-0 text-muted">{{ $p1->dept_name }}</p>
+                                        <p class="mb-0 text-muted">IT Admin</p>
+                                    </div>
+                                    <div class="ms-2">
+                                        <a href="{{ route('staff_edit_view', ['id' => $p1->id]) }}"
+                                            class="text-primary me-2">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a href="#" class="text-danger">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-body shadow-lg">
-                            <div class="row">
-                                <div class="col">
-                                    <img class="border rounded-1 mx-3" src="{{ asset('storage/uploads/staff/' . $p1->photo) }}"
-                                        alt="Profile" style="width: calc(15vh); height: calc(15vh);">
-                                </div>
-                                <div class="col d-flex flex-column justify-content-start">
-                                    <p class="fs-6 ms-2">{{ $p1->fname . ' ' . $p1->mname . ' ' . $p1->lname }}</p>
-                                    <p class="fs-5 ms-2 mb-0">{{ $p1->dept_name }}</p>
-                                    <p class="fs-5 ms-2">IT Admin</p>
+
+                        {{-- Second Card (if exists) --}}
+                        @if($p2)
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center">
+                                        <img src="{{ asset('storage/uploads/staff/' . $p2->photo) }}" alt="Profile"
+                                            class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">{{ $p2->fname }} {{ $p2->mname }} {{ $p2->lname }}</h6>
+                                            <p class="mb-0 text-muted">{{ $p2->dept_name }}</p>
+                                            <p class="mb-0 text-muted">IT Admin</p>
+                                        </div>
+                                        <div class="ms-2">
+                                            <a href="{{ route('staff_edit_view', ['id' => $p2->id]) }}"
+                                                class="text-primary me-2">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <a href="#" class="text-danger">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card card-body shadow-lg">
+                        @endif
 
-                            @if(isset($p2))
-                                <div class="row">
-                                    <div class="col">
-                                        <img class="border rounded-1 mx-3" src="{{ asset('storage/uploads/staff/' . $p2->photo) }}" alt="Profile" style="width: calc(10vh); height: calc(10vh);">
-                                    </div>
-                                    <div class="col d-flex flex-column">
-                                        <p class="fs-5 ms-2">{{ $p2->fname . ' ' . $p2->mname . ' ' . $p2->lname }}</p>
-                                        <p class="fs-5 ms-2">{{ $p2->dept_name }}</p>
-                                    </div>
-                                </div>    
-
-                            @endif
-                        </div>
-                    </div>
+                    @endfor
                 </div>
-
-            @endfor
-            
-
-
-        </div>        
-
-
-   </x-dashboard.cardcomponent>
-
-   
-
-
+            </div>
+        </div>
+    </x-dashboard.cardcomponent>
 </x-dashboard.basecomponent>
