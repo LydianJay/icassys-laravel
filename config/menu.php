@@ -40,16 +40,27 @@ return [
 
 
     [
-        'menu'      => 'Finance',
+        'menu'      => 'Fees',
         'icon'      => 'fa-solid fa-coins',
         'submenu'   => [
             'Collect Fees' => [
                 'route' => 'under_dev'
             ],
             'Fees Type' => [
-                'route' => 'under_dev'
+                'route' => 'fee_type'
             ],
             'Fees Group' => [
+                'route' => 'under_dev'
+            ],
+        ],
+    ],
+
+
+    [
+        'menu'      => 'Academics',
+        'icon'      => 'fa-solid fa-book-open',
+        'submenu'   => [
+            'Classes' => [
                 'route' => 'under_dev'
             ],
         ],

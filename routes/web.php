@@ -9,7 +9,7 @@ use App\Http\Controllers\HumanResource;
 use App\Http\Controllers\Designation;
 use App\Http\Controllers\Maintenance;
 use App\Http\Controllers\Student;
-
+use App\Http\Controllers\Fees;
 Route::get('/', [Site::class, 'index'])->name('home');
 Route::get('/login', [AuthCtrl::class, 'index'])->name('login');
 Route::post('/login', [AuthCtrl::class, 'login'])->name('login.post');
@@ -46,4 +46,8 @@ Route::middleware(['auth:web'])->group(function(){
     Route::post('/student/student_edit', [Student::class, 'student_edit'])->name('student_edit');
     Route::get('/student/student_delete', [Student::class, 'student_delete'])->name('student_delete');
    
+
+
+    Route::get('/fee/fee_type', [Fees::class, 'fee_type'])->name('fee_type');
+    
 });
