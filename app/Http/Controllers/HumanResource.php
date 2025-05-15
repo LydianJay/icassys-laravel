@@ -170,6 +170,7 @@ class HumanResource extends Controller
             ->leftJoin('designation', 'designation.staff_id', '=', 'staff.staff_id')
             ->leftJoin('role', 'role.role_id', '=', 'designation.role_id')
             ->select('users.*', 'staff.*', 'department.*', 'designation.*', 'role.*')
+            ->limit(12)
             ->get();
         }
 
