@@ -12,12 +12,26 @@ use App\Models\student as StudentModel;
 use Illuminate\Support\Facades\DB;
 class Student extends Controller
 {
-    public function student() {
-        
-        $data['users'] = User::join('student', 'student.user_id','=','id')
-        ->join('guardian', 'guardian.guardian_id', '=', 'student.guardian_id')
-        ->limit(12)
-        ->get();
+    public function student(Request $request) {
+
+        $search = $request->input('search');
+
+        $data = [];
+        if($search != null && $search != '') {
+            $data['users'] = User::join('student', 'student.user_id','=','id')
+            ->join('guardian', 'guardian.guardian_id', '=', 'student.guardian_id')
+            ->where('fname', 'LIKE', '%' . $search . '%')
+            ->orWhere('lname', 'LIKE', '%' . $search . '%')
+            ->limit(12)
+            ->get();
+        }
+        else {
+            $data['users'] = User::join('student', 'student.user_id','=','id')
+            ->join('guardian', 'guardian.guardian_id', '=', 'student.guardian_id')
+            ->limit(12)
+            ->get();    
+        }
+
 
         
 
