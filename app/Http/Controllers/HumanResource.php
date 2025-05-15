@@ -147,22 +147,33 @@ class HumanResource extends Controller
 
 
 
-    public function staff() {
+    public function staff(Request $request) {
 
-        // $data['users'] = User::join('staff', 'staff.user_id','=','id')
-        // ->join('department', 'department.dept_id', '=', 'staff.dept_id')
-        // ->join('designation', 'designation.staff_id', '=', 'staff.staff_id')
-        // ->join('role', 'role.role_id', '=', 'designation.role_id')
-        // ->limit(12)
-        // ->get();
+        
+        $search = $request->input('search');
+        $data = [];
 
-        $data['users'] = User::join('staff', 'staff.user_id', '=', 'users.id')
-        ->join('department', 'department.dept_id', '=', 'staff.dept_id')
-        ->leftJoin('designation', 'designation.staff_id', '=', 'staff.staff_id')
-        ->leftJoin('role', 'role.role_id', '=', 'designation.role_id')
-        ->select('users.*', 'staff.*', 'department.*', 'designation.*', 'role.*')
-        ->limit(12)
-        ->get();
+        if($search != null && $search != ''){
+            $data['users'] = User::join('staff', 'staff.user_id', '=', 'users.id')
+            ->join('department', 'department.dept_id', '=', 'staff.dept_id')
+            ->leftJoin('designation', 'designation.staff_id', '=', 'staff.staff_id')
+            ->leftJoin('role', 'role.role_id', '=', 'designation.role_id')
+            ->select('users.*', 'staff.*', 'department.*', 'designation.*', 'role.*')
+            ->where('fname', 'LIKE', '%' . $search . '%')
+            ->orWhere('lname', 'LIKE', '%' . $search . '%')
+            ->limit(12)
+            ->get();
+        }
+        else {
+            $data['users'] = User::join('staff', 'staff.user_id', '=', 'users.id')
+            ->join('department', 'department.dept_id', '=', 'staff.dept_id')
+            ->leftJoin('designation', 'designation.staff_id', '=', 'staff.staff_id')
+            ->leftJoin('role', 'role.role_id', '=', 'designation.role_id')
+            ->select('users.*', 'staff.*', 'department.*', 'designation.*', 'role.*')
+            ->get();
+        }
+
+        
 
         
         // dd($data['users']);

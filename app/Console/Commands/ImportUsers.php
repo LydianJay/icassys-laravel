@@ -69,7 +69,7 @@ class ImportUsers extends Command
                 ]);
 
                 $deptId = (int) ($row[17] ?? null); // Department ID from CSV
-                $marital = strtolower($row[18] ?? 'not specified');
+                $marital = strtolower($row[18] ?? 'single');
                 $joinDate = isset($row[19]) ? Carbon::parse($row[19])->toDateString() : now()->toDateString();
 
                 DB::table('staff')->insert([
