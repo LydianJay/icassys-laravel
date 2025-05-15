@@ -4,14 +4,93 @@
 
             <div class="row mt-3 align-items-center pb-2 border-bottom">
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-success" href="{{route('student_create_view')}}">Create
-                        <span><i class="fa-solid fa-plus"></i></span></a>
+                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#create_modal">Create <span><i
+                                class="fa-solid fa-plus"></i></span></button>
                 </div>
                 <div class="col">
                     <x-dashboard.cardsearchbar search_route="student"
-                        placeholder="Jane Doe"></x-dashboard.cardsearchbar>
+                        placeholder="Tuition.."></x-dashboard.cardsearchbar>
                 </div>
             </div>
+
         </x-dashboard.cardheader>
+        <div class="card-body">
+            <table class="table-responsive table table-striped">
+                <thead>
+                    <tr class="text-center">
+                        <td>Fee Type</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($fee_type as $d)
+                        <tr class="text-center">
+                            <td>{{ $d->fee_type_name }}</td>
+                            <td>
+                                <div class="d-flex flex-row justify-content-evenly align-items-center">
+
+                                    <button class="btn btn-sm btn-outline-secondary"
+                                        onclick="window.location = '{{route('department', ['id' => $d->dept_id])}}'; ">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </button>
+
+                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                        data-bs-target="#confirm_delete_modal" id="delete_btn" dept_id="{{$d->dept_id}}">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </x-dashboard.cardcomponent>
+
+    <x-dashboard.createmodal create_route="fee_type_create">
+        
+        <div class="input-group my-3">
+            <input type="text" class="form-control" name="fee_type_name" placeholder="Name">
+            @error('fee_type_name')<small class="text-danger">{{ $message }}</small>@enderror
+        </div>
+        <div class="input-group my-3">
+            <input type="text" class="form-control" name="fees_code" placeholder="Code">
+            @error('fees_code')<small class="text-danger">{{ $message }}</small>@enderror
+        </div>
+        <div class="input-group my-3">
+            <input type="number" step="0.01" class="form-control" name="ammount" placeholder="Ammount">
+            @error('ammount')<small class="text-danger">{{ $message }}</small>@enderror
+        </div>
+    </x-dashboard.createmodal>
+
+    @if(isset($edit))
+        <x-dashboard.editmodal edit_route="department_edit">
+            <div class="input-group">
+                <input type="number" name="id" hidden value="{{$edit->dept_id}}">
+                <input type="text"  class="form-control" name="dept_name" value="{{$edit->dept_name}}" placeholder="IT...">
+            </div>
+        </x-dashboard.editmodal>
+    @endif
+    
+    <x-dashboard.deletemodal></x-dashboard.deletemodal>
+    
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            @if(isset($edit))
+                let edit_modal = new bootstrap.Modal(document.getElementById('edit_modal'));
+                edit_modal.show();
+            @endif
+
+            let delete_btn = document.getElementById('delete_btn');
+            delete_btn.addEventListener('click', function () {
+                let dept_id = delete_btn.getAttribute('dept_id');
+                const url = "{{ route('department_delete') }}" + "?id=" + dept_id;
+                document.getElementById('confirm_delete').setAttribute('href', url);
+            });
+        });
+    </script>
+
 </x-dashboard.basecomponent>

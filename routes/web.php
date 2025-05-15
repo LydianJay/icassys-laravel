@@ -49,5 +49,5 @@ Route::middleware(['auth:web'])->group(function(){
 
 
     Route::get('/fee/fee_type', [Fees::class, 'fee_type'])->name('fee_type');
-    
+    Route::post('/fee/fee_type_create', [Fees::class, 'fee_type_create'])->name('fee_type_create');
 });
