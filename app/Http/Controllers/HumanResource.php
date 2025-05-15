@@ -149,12 +149,21 @@ class HumanResource extends Controller
 
     public function staff() {
 
-        $data['users'] = User::join('staff', 'staff.user_id','=','id')
+        // $data['users'] = User::join('staff', 'staff.user_id','=','id')
+        // ->join('department', 'department.dept_id', '=', 'staff.dept_id')
+        // ->join('designation', 'designation.staff_id', '=', 'staff.staff_id')
+        // ->join('role', 'role.role_id', '=', 'designation.role_id')
+        // ->limit(12)
+        // ->get();
+
+        $data['users'] = User::join('staff', 'staff.user_id', '=', 'users.id')
         ->join('department', 'department.dept_id', '=', 'staff.dept_id')
-        ->join('designation', 'designation.staff_id', '=', 'staff.staff_id')
-        ->join('role', 'role.role_id', '=', 'designation.role_id')
+        ->leftJoin('designation', 'designation.staff_id', '=', 'staff.staff_id')
+        ->leftJoin('role', 'role.role_id', '=', 'designation.role_id')
+        ->select('users.*', 'staff.*', 'department.*', 'designation.*', 'role.*')
         ->limit(12)
         ->get();
+
         
         // dd($data['users']);
         return view('pages.human_resource.staff_directory', $data);

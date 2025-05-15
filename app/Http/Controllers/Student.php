@@ -15,7 +15,7 @@ class Student extends Controller
     public function student(Request $request) {
 
         $search = $request->input('search');
-
+        // dd(bcrypt('@default_123'));
         $data = [];
         if($search != null && $search != '') {
             $data['users'] = User::join('student', 'student.user_id','=','id')
