@@ -181,6 +181,19 @@ class HumanResource extends Controller
         return view('pages.human_resource.staff_directory', $data);
     }
 
+
+    public function staff_delete(Request $request) {
+        $id = $request->input('id');
+        $user = User::find($id);
+
+        $staff = Staff::where('user_id', '=', $user->id)->first();
+        Staff::destroy($staff->staff_id);
+        User::destroy($id);
+
+        // NOTE later on you need too delete permissions for this user
+
+        return back()->with('status',['alert' => 'alert-warning', 'msg' => 'User Deleted!'] );
+    }
     public function staff_edit_view(Request $request) {
 
         $data['dept'] = Department::all();

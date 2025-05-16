@@ -50,7 +50,7 @@ return [
                 'route' => 'fee_type'
             ],
             'Fees Group' => [
-                'route' => 'under_dev'
+                'route' => 'fee_group'
             ],
         ],
     ],

@@ -37,7 +37,7 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/hr/staff/create_view', [HumanResource::class, 'staff_create_view'])->name('staff_create_view');
     Route::get('/hr/staff/edit_view', [HumanResource::class, 'staff_edit_view'])->name('staff_edit_view');
     Route::post('/hr/staff/create', [HumanResource::class, 'staff_create'])->name('staff_create');
-
+    Route::get('/hr/staff/delete', [HumanResource::class, 'staff_delete'])->name('staff_delete');
 
     Route::get('/student/student', [Student::class, 'student'])->name('student');
     Route::get('/student/student_create_view', [Student::class, 'student_create_view'])->name('student_create_view');
@@ -49,5 +49,9 @@ Route::middleware(['auth:web'])->group(function(){
 
 
     Route::get('/fee/fee_type', [Fees::class, 'fee_type'])->name('fee_type');
+    Route::post('/fee/fee_type_edit', [Fees::class, 'fee_type_edit'])->name('fee_type_edit');
     Route::post('/fee/fee_type_create', [Fees::class, 'fee_type_create'])->name('fee_type_create');
+
+
+    Route::get('/fee/fee_group', [Fees::class, 'fee_group'])->name('fee_group');
 });

@@ -4,11 +4,11 @@
 
             <div class="row mt-3 align-items-center pb-2 border-bottom">
                 <div class="col">
-                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#create_modal">Create <span><i
-                                class="fa-solid fa-plus"></i></span></button>
+                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                        data-bs-target="#create_modal">Create <span><i class="fa-solid fa-plus"></i></span></button>
                 </div>
                 <div class="col">
-                    <x-dashboard.cardsearchbar search_route="fee_type"
+                    <x-dashboard.cardsearchbar search_route="fee_group"
                         placeholder="Tuition.."></x-dashboard.cardsearchbar>
                 </div>
             </div>
@@ -18,7 +18,7 @@
             <table class="table-responsive table table-striped">
                 <thead>
                     <tr class="text-center">
-                        <td>Fee Type</td>
+                        <td>Fee Group</td>
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -49,7 +49,7 @@
     </x-dashboard.cardcomponent>
 
     <x-dashboard.createmodal create_route="fee_type_create">
-        
+
         <div class="input-group my-3">
             <input type="text" class="form-control" name="fee_type_name" placeholder="Name">
             @error('fee_type_name')<small class="text-danger">{{ $message }}</small>@enderror
@@ -69,20 +69,23 @@
             <input type="number" name="id" hidden value="{{$edit->fee_type_id}}">
 
             <div class="input-group my-3">
-                <input type="text"  class="form-control" name="fee_type_name" value="{{$edit->fee_type_name}}" placeholder="Fee Type Name">
+                <input type="text" class="form-control" name="fee_type_name" value="{{$edit->fee_type_name}}"
+                    placeholder="Fee Type Name">
             </div>
             <div class="input-group my-3">
-                <input type="text" class="form-control" name="fees_code" value="{{$edit->fees_code}}" placeholder="Fee Type code">
+                <input type="text" class="form-control" name="fees_code" value="{{$edit->fees_code}}"
+                    placeholder="Fee Type code">
             </div>
             <div class="input-group my-3">
-                <input type="number" step="0.01" class="form-control" name="ammount" value="{{$edit->ammount}}" placeholder="ammount">
+                <input type="number" step="0.01" class="form-control" name="ammount" value="{{$edit->ammount}}"
+                    placeholder="ammount">
             </div>
         </x-dashboard.editmodal>
     @endif
-    
+
     <x-dashboard.deletemodal></x-dashboard.deletemodal>
-    
-    
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
