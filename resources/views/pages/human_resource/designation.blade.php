@@ -55,7 +55,7 @@
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
 
-                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn" role_id="{{$d->role_id}}">
+                                        <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$d->role_id}}" role_id="{{$d->role_id}}">
                                             <i class="fa-solid fa-trash"></i>
                                         </button>
 
@@ -151,11 +151,26 @@
                 edit_modal.show();
             @endif
 
-            let delete_btn = document.getElementById('delete_btn');
-            delete_btn.addEventListener('click', function (){
-                let role_id = delete_btn.getAttribute('role_id');
-                const url =  "{{ route('designation_delete') }}" +  "?id=" + role_id;
-                document.getElementById('confirm_delete').setAttribute('href', url);
+            let roles = @json($designations)    
+            let delete_buttons = roles.map(ids => ids.role_id);
+
+
+            // let delete_btn = document.getElementById('delete_btn');
+            // delete_btn.addEventListener('click', function (){
+            //     let role_id = delete_btn.getAttribute('role_id');
+            //     const url =  "{{ route('designation_delete') }}" +  "?id=" + role_id;
+            //     document.getElementById('confirm_delete').setAttribute('href', url);
+            // });
+
+
+            
+            delete_buttons.forEach(element => {
+                let delete_btn = document.getElementById('delete_btn_' + element);
+                delete_btn.addEventListener('click', function () {
+                    let id = delete_btn.getAttribute('role_id');
+                    const url = "{{ route('designation_delete') }}" + "?id=" + id;
+                    document.getElementById('confirm_delete').setAttribute('href', url);
+                });
             });
         });
     </script>

@@ -125,7 +125,7 @@ class HumanResource extends Controller
 
         $found      = Role::find($id);
         
-
+        
         $found->role_name = $role_name;
         $found->save();
 
@@ -137,7 +137,7 @@ class HumanResource extends Controller
     public function designation_delete(Request $request) {
 
         $data = $request->input('id');
-
+        // dd($data);
         Role::destroy($data);
         
 
