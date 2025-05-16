@@ -93,19 +93,6 @@
 
             let fees = @json($fee_type);
 
-
-
-
-            // let delete_btn = document.getElementById('delete_btn');
-            // delete_btn.addEventListener('click', function () {
-            //     let dept_id = delete_btn.getAttribute('dept_id');
-            //     const url = "{{ route('department_delete') }}" + "?id=" + dept_id;
-            //     document.getElementById('confirm_delete').setAttribute('href', url);
-            // });
-
-
-
-
             let delete_buttons = fees.map(ids => ids.fee_type_id);
             delete_buttons.forEach(element => {
                 let delete_btn = document.getElementById('delete_btn_' + element);

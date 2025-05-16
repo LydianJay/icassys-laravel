@@ -50,11 +50,6 @@ return [
        'category'      => 'junior-high',
     ],
     [
-        'class_name'    => 'Grade 8',
-        'class_code'    => 'G8',
-        'category'      => 'junior-high',
-    ],
-    [
         'class_name'    => 'Grade 9',
         'class_code'    => 'G9',
         'category'      => 'junior-high',
@@ -63,13 +58,6 @@ return [
         'class_name'    => 'Grade 10',
         'class_code'    => 'G10',
         'category'      => 'junior-high',
-    ],
-
-
-    [
-        'class_name'    => 'Grade 11',
-        'class_code'    => 'G11',
-        'category'      => 'senior-high',
     ],
 
     [
