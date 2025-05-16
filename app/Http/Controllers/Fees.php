@@ -88,7 +88,11 @@ class Fees extends Controller
     }
 
     public function fee_type_delete(Request $request) {
+        $id = $request->input('id');
 
+        FeeType::destroy($id);
+
+        return back()->with('status',['alert' => 'alert-danger', 'msg' => 'Fee Type Deleted!'] );
     }
 
     public function fee_group(Request $request) {
