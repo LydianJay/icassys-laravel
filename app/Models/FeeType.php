@@ -15,4 +15,10 @@ class FeeType extends Model
         'fees_code',
         'ammount',
     ];
+
+    public function feeGroups()
+    {
+        // One FeeType can have many FeeGroups (if your logic allows it)
+        return $this->hasMany(FeeGroup::class, 'fee_type_id', 'fee_type_id');
+    }
 }

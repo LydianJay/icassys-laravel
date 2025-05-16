@@ -1,105 +1,113 @@
 <x-dashboard.basecomponent>
     <x-dashboard.cardcomponent>
-        <x-dashboard.cardheader title="Fee Type">
+        <x-dashboard.cardheader title="Fee Group">
 
             <div class="row mt-3 align-items-center pb-2 border-bottom">
                 <div class="col">
-                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
-                        data-bs-target="#create_modal">Create <span><i class="fa-solid fa-plus"></i></span></button>
+                    
                 </div>
                 <div class="col">
                     <x-dashboard.cardsearchbar search_route="fee_group"
-                        placeholder="Tuition.."></x-dashboard.cardsearchbar>
+                        placeholder="College"></x-dashboard.cardsearchbar>
                 </div>
             </div>
 
         </x-dashboard.cardheader>
         <div class="card-body">
-            <table class="table-responsive table table-striped">
-                <thead>
-                    <tr class="text-center">
-                        <td>Fee Group</td>
-                        <td>Action</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($fee_type as $d)
-                        <tr class="text-center">
-                            <td>{{ $d->fee_type_name }}</td>
-                            <td>
-                                <div class="d-flex flex-row justify-content-evenly align-items-center">
+            <div class="mt-3">
 
-                                    <button class="btn btn-sm btn-outline-secondary"
-                                        onclick="window.location = '{{route('fee_type', ['id' => $d->fee_type_id])}}'; ">
-                                        <i class="fa-solid fa-pen-to-square"></i>
-                                    </button>
+                @foreach ($fee_group as $f)
+                    <div class="card h-100 shadow-sm my-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">[{{$f->class_code}}] {{$f->class_name}} - {{ucfirst($f->category)}}</h5>
+                            <a class="btn btn-sm btn-outline-primary" href="{{ route('fee_group', ['id' => $f->class_master_id]) }}">
+                                <i class="fa-solid fa-plus"></i>
+                            </a>              
+                        </div>
+                        @php
+                            $totalAmount = 0;
+                        @endphp
+                        <div class="card-body">
+                            <ul class="list-group my-3" >
+                                @if($f->feeGroups->isEmpty())
+                                    <li class="list-group-item list-group-item-light text-dark p-0">
+                                        <p class="fs-7 fw-bold mb-0 text-center border-1 px-2 py-2 ">No Fees</p>
+                                    </li>
+                                @endif
+                                @foreach ($f->feeGroups as $g)
+                                    <li class="list-group-item list-group-item-light text-dark p-0">
+                                        <div class="d-flex align-items-center justify-content-between px-0">
+                                            @if ($g->feeType)
+                                                @php
+                                                    $totalAmount += $g->feeType->ammount;
+                                                @endphp
+                                                <div class="d-flex align-items-center">
+                                                    <p class="fs-7 fw-bold mb-0 border-end text-center border-1 px-2 py-2 border-dark">{{$g->feeType->fees_code}}</p>
+                                                    <p class="fs-6 mb-0 px-3">{{$g->feeType->fee_type_name}} - <strong>{{$g->feeType->ammount}}</strong></p>
+                                                </div>
+                                                <a class="btn btn-sm btn-outline-danger me-2" href="{{route('remove_fee', ['id' => $g->fee_group_id])}}">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </li>
+                                @endforeach
 
-                                    <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                        data-bs-target="#confirm_delete_modal" id="delete_btn" dept_id="{{$d->dept_id}}">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
 
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                <li class="list-group-item list-group-item-secondary text-dark d-flex justify-content-between">
+                                    <strong>Total</strong>
+                                    <strong>₱{{$totalAmount}}</strong>                   
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                @endforeach
+                
+
+            </div>
         </div>
     </x-dashboard.cardcomponent>
 
-    <x-dashboard.createmodal create_route="fee_type_create">
-
-        <div class="input-group my-3">
-            <input type="text" class="form-control" name="fee_type_name" placeholder="Name">
-            @error('fee_type_name')<small class="text-danger">{{ $message }}</small>@enderror
-        </div>
-        <div class="input-group my-3">
-            <input type="text" class="form-control" name="fees_code" placeholder="Code">
-            @error('fees_code')<small class="text-danger">{{ $message }}</small>@enderror
-        </div>
-        <div class="input-group my-3">
-            <input type="number" step="0.01" class="form-control" name="ammount" placeholder="Ammount">
-            @error('ammount')<small class="text-danger">{{ $message }}</small>@enderror
-        </div>
-    </x-dashboard.createmodal>
-
-    @if(isset($edit))
-        <x-dashboard.editmodal edit_route="fee_type_edit">
-            <input type="number" name="id" hidden value="{{$edit->fee_type_id}}">
-
-            <div class="input-group my-3">
-                <input type="text" class="form-control" name="fee_type_name" value="{{$edit->fee_type_name}}"
-                    placeholder="Fee Type Name">
+    @if (isset($fee_types))
+        <div class="modal fade" id="add_fee_modal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Add Fee</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{route('add_fee')}}" method="POST">
+                        @csrf
+                        <input type="number" name="class_master_id" value="{{$class_master_id}}" hidden>
+                        <div class="modal-body">
+                            <label class="form-label">Fee Type</label>
+                            <div class="input-group">
+                                <select name="fee_type" class="form-control">
+                                    @foreach ($fee_types as $types)
+                                        <option value="{{$types->fee_type_id}}">{{$types->fee_type_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="input-group my-3">
-                <input type="text" class="form-control" name="fees_code" value="{{$edit->fees_code}}"
-                    placeholder="Fee Type code">
-            </div>
-            <div class="input-group my-3">
-                <input type="number" step="0.01" class="form-control" name="ammount" value="{{$edit->ammount}}"
-                    placeholder="ammount">
-            </div>
-        </x-dashboard.editmodal>
+        </div>
     @endif
-
-    <x-dashboard.deletemodal></x-dashboard.deletemodal>
-
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-
-            @if(isset($edit))
-                let edit_modal = new bootstrap.Modal(document.getElementById('edit_modal'));
-                edit_modal.show();
+            @if (isset($fee_types))
+                const add_modal = new bootstrap.Modal(document.getElementById('add_fee_modal'));
+                add_modal.show();
             @endif
-
-            let delete_btn = document.getElementById('delete_btn');
-            delete_btn.addEventListener('click', function () {
-                let dept_id = delete_btn.getAttribute('dept_id');
-                const url = "{{ route('department_delete') }}" + "?id=" + dept_id;
-                document.getElementById('confirm_delete').setAttribute('href', url);
-            });
+           
         });
     </script>
 

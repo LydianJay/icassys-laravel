@@ -54,4 +54,6 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/fee/fee_type_delete', [Fees::class, 'fee_type_delete'])->name('fee_type_delete');
 
     Route::get('/fee/fee_group', [Fees::class, 'fee_group'])->name('fee_group');
+    Route::post('/fee/add_fee', [Fees::class, 'add_fee'])->name('add_fee');
+    Route::get('/fee/remove_fee', [Fees::class, 'remove_fee'])->name('remove_fee');
 });

@@ -15,4 +15,9 @@ class ClassMaster extends Model
         'class_name',
         'category',
     ];
+
+    public function feeGroups()
+    {
+        return $this->hasMany(FeeGroup::class, 'class_master_id', 'class_master_id');
+    }
 }

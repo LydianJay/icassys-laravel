@@ -19,6 +19,8 @@
                 <thead>
                     <tr class="text-center">
                         <td>Fee Type</td>
+                        <td>Code</td>
+                        <td>Ammount</td>
                         <td>Action</td>
                     </tr>
                 </thead>
@@ -26,6 +28,9 @@
                     @foreach ($fee_type as $d)
                         <tr class="text-center">
                             <td>{{ $d->fee_type_name }}</td>
+                            <td>{{ $d->fees_code }}</td>
+                            <td>{{ $d->ammount }}</td>
+
                             <td>
                                 <div class="d-flex flex-row justify-content-evenly align-items-center">
 
