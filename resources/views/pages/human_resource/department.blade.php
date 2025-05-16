@@ -46,7 +46,7 @@
                                     </button>
 
                                     <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal"
-                                        id="delete_btn" dept_id="{{$d->dept_id}}">
+                                        id="delete_btn_{{$d->dept_id}}" dept_id="{{$d->dept_id}}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
 
@@ -84,13 +84,24 @@
                 let edit_modal = new bootstrap.Modal(document.getElementById('edit_modal'));
                 edit_modal.show();
             @endif
+            let departments = @json($departments);
 
-            let delete_btn = document.getElementById('delete_btn');
-            delete_btn.addEventListener('click', function () {
-                let dept_id = delete_btn.getAttribute('dept_id');
-                const url = "{{ route('department_delete') }}" + "?id=" + dept_id;
-                document.getElementById('confirm_delete').setAttribute('href', url);
+            let delete_buttons = departments.map(dept => dept.dept_id);
+            delete_buttons.forEach(element => {
+                let delete_btn = document.getElementById('delete_btn_' + element);
+                delete_btn.addEventListener('click', function(){
+                    let dept_id = delete_btn.getAttribute('dept_id');
+                    const url = "{{ route('department_delete') }}" + "?id=" + dept_id;
+                    document.getElementById('confirm_delete').setAttribute('href', url);
+                });
             });
+            
+            // let delete_btn = document.getElementById('delete_btn');
+            // delete_btn.addEventListener('click', function () {
+            //     let dept_id = delete_btn.getAttribute('dept_id');
+            //     const url = "{{ route('department_delete') }}" + "?id=" + dept_id;
+            //     document.getElementById('confirm_delete').setAttribute('href', url);
+            // });
         });
     </script>
 </x-dashboard.basecomponent>
