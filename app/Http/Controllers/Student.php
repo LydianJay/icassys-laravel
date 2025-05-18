@@ -233,6 +233,6 @@ class Student extends Controller
 
 
         return redirect()->back()->with( 'status',['alert' => 'alert-info', 'msg' => 'Student Created!']);
-
+        
     }
 }
