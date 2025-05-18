@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('student_fee_id');
             $table->foreignId('student_id')->constrained('student', 'student_id')->onDelete('cascade');
             $table->foreignId('fee_type_id')->constrained('fee_type', 'fee_type_id')->onDelete('cascade');
-            $table->foreignId('academic_year_id')->constrained('academic_year ', 'academic_year_id')->onDelete('cascade');
+            $table->foreignId('academic_year_id')->constrained('academic_year', 'academic_year_id')->onDelete('cascade');
         }); 
     }
 

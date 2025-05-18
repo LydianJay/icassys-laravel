@@ -4,7 +4,7 @@
            
             <div class="row mt-3 align-items-center pb-2 border-bottom">
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-success" href="{{route('student_create_view')}}">Create
+                    <a class="btn btn-sm btn-outline-success" href="{{route('student_create_view')}}">Enroll
                         <span><i class="fa-solid fa-plus"></i></span></a>
                 </div>
                 <div class="col">
@@ -16,10 +16,10 @@
             <div class="container mt-3">
                 <div class="row">
                     @for($i = 0; $i < count($users); $i += 2)
-                                                                                                                                                                                                                                                    @php
+                                                                @php
                         $p1 = $users[$i];
                         $p2 = $users[$i + 1] ?? null;
-                                                                                                                                                                                                                                                    @endphp
+                                                                @endphp
 
                                                                 {{-- First Card --}}
                                                                 <div class="col-md-6 mb-4">
@@ -36,7 +36,7 @@
                                                                                 <a href="{{ route('student_edit_view', ['id' => $p1->id]) }}" class="text-primary me-2">
                                                                                     <i class="fa-solid fa-pen-to-square"></i>
                                                                                 </a>
-                                                                                <a student_id="{{ $p1->id}}" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn" href="{{ route('student_delete', ['id' => $p1->id]) }}" class="text-danger">
+                                                                                <a student_id="{{ $p1->id}}" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p1->id}}" href="{{ route('student_delete', ['id' => $p1->id]) }}" class="text-danger">
                                                                                     <i class="fa-solid fa-trash"></i>
                                                                                 </a>
                                                                             </div>
@@ -60,7 +60,7 @@
                                                                                     <a href="{{ route('student_edit_view', ['id' => $p2->id]) }}" class="text-primary me-2">
                                                                                         <i class="fa-solid fa-pen-to-square"></i>
                                                                                     </a>
-                                                                                    <a student_id="{{ $p2->id}}" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn" href="{{ route('student_delete', ['id' => $p2->id]) }}" class="text-danger">
+                                                                                    <a student_id="{{ $p2->id}}" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p2->id}}" href="{{ route('student_delete', ['id' => $p2->id]) }}" class="text-danger">
                                                                                         <i class="fa-solid fa-trash"></i>
                                                                                     </a>
                                                                                 </div>
@@ -81,12 +81,28 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            let delete_btn = document.getElementById('delete_btn');
-            delete_btn.addEventListener('click', function () {
-                let student_id = delete_btn.getAttribute('student_id');
-                const url = "{{ route('student_delete') }}" + "?id=" + student_id;
-                document.getElementById('confirm_delete').setAttribute('href', url);
-            });
+            // let delete_btn = document.getElementById('delete_btn');
+            // delete_btn.addEventListener('click', function () {
+            //     let student_id = delete_btn.getAttribute('student_id');
+            //     const url = "{{ route('student_delete') }}" + "?id=" + student_id;
+            //     document.getElementById('confirm_delete').setAttribute('href', url);
+            // });
+
+
+            @foreach ($users as $u)
+
+                let delete_btn_{{$u->id}} = document.getElementById('delete_btn_{{$u->id}}');
+                delete_btn_{{$u->id}}.addEventListener('click', function () {
+                    console.log('Click');
+                    let staff_id = delete_btn_{{$u->id}}.getAttribute('student_id');
+
+                    console.log(staff_id);
+                    const url = "{{ route('student_delete') }}" + "?id=" + staff_id;
+                    document.getElementById('confirm_delete').setAttribute('href', url);
+                });
+
+            @endforeach()
+            
         });
     </script>
 </x-dashboard.basecomponent>

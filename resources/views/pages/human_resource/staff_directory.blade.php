@@ -17,60 +17,60 @@
             <div class="container mt-3">
                 <div class="row">
                     @for($i = 0; $i < count($users); $i += 2)
-                                                                                                        @php
-    $p1 = $users[$i];
-    $p2 = $users[$i + 1] ?? null;
-                                                                                                        @endphp
+                        @php
+                            $p1 = $users[$i];
+                            $p2 = $users[$i + 1] ?? null;
+                        @endphp
 
-                                            {{-- First Card --}}
-                                            <div class="col-md-6 mb-4">
-                                                <div class="card h-100 shadow-sm">
-                                                    <div class="card-body d-flex align-items-center">
-                                                        <img src="{{ asset('storage/uploads/staff/' . $p1->photo) }}" alt="Profile"
-                                                            class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
-                                                        <div class="flex-grow-1">
-                                                            <h6 class="mb-1">{{ $p1->fname }} {{ $p1->mname }} {{ $p1->lname }}</h6>
-                                                            <p class="mb-0 text-muted">{{ $p1->dept_name }}</p>
-                                                            <p class="mb-0 text-muted">{{ $p1->role_name }}</p>
-                                                        </div>
-                                                        <div class="ms-2">
-                                                            <a href="{{ route('staff_edit_view', ['id' => $p1->id]) }}"
-                                                                class="text-primary me-2">
-                                                                <i class="fa-solid fa-pen-to-square"></i>
-                                                            </a>
-                                                            <a class="text-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p1->id}}" staff_id="{{$p1->id}}">
-                                                                <i class="fa-solid fa-trash"></i>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                        {{-- First Card --}}
+                        <div class="col-md-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body d-flex align-items-center">
+                                    <img src="{{ asset('storage/uploads/staff/' . $p1->photo) }}" alt="Profile"
+                                        class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">{{ $p1->fname }} {{ $p1->mname }} {{ $p1->lname }}</h6>
+                                        <p class="mb-0 text-muted">{{ $p1->dept_name }}</p>
+                                        <p class="mb-0 text-muted">{{ $p1->role_name }}</p>
+                                    </div>
+                                    <div class="ms-2">
+                                        <a href="{{ route('staff_edit_view', ['id' => $p1->id]) }}"
+                                            class="text-primary me-2">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a class="text-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p1->id}}" staff_id="{{$p1->id}}">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                            {{-- Second Card (if exists) --}}
-                                            @if($p2)
-                                                <div class="col-md-6 mb-4">
-                                                    <div class="card h-100 shadow-sm">
-                                                        <div class="card-body d-flex align-items-center">
-                                                            <img src="{{ asset('storage/uploads/staff/' . $p2->photo) }}" alt="Profile"
-                                                                class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
-                                                            <div class="flex-grow-1">
-                                                                <h6 class="mb-1">{{ $p2->fname }} {{ $p2->mname }} {{ $p2->lname }}</h6>
-                                                                <p class="mb-0 text-muted">{{ $p2->dept_name }}</p>
-                                                                <p class="mb-0 text-muted">{{ $p2->role_name }}</p>
-                                                            </div>
-                                                            <div class="ms-2">
-                                                                <a href="{{ route('staff_edit_view', ['id' => $p2->id]) }}"
-                                                                    class="text-primary me-2">
-                                                                    <i class="fa-solid fa-pen-to-square"></i>
-                                                                </a>
-                                                                <a  class="text-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p2->id}}" staff_id="{{$p2->id}}">
-                                                                    <i class="fa-solid fa-trash"></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            @endif
+                        {{-- Second Card (if exists) --}}
+                        @if($p2)
+                            <div class="col-md-6 mb-4">
+                                <div class="card h-100 shadow-sm">
+                                    <div class="card-body d-flex align-items-center">
+                                        <img src="{{ asset('storage/uploads/staff/' . $p2->photo) }}" alt="Profile"
+                                            class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                                        <div class="flex-grow-1">
+                                            <h6 class="mb-1">{{ $p2->fname }} {{ $p2->mname }} {{ $p2->lname }}</h6>
+                                            <p class="mb-0 text-muted">{{ $p2->dept_name }}</p>
+                                            <p class="mb-0 text-muted">{{ $p2->role_name }}</p>
+                                        </div>
+                                        <div class="ms-2">
+                                            <a href="{{ route('staff_edit_view', ['id' => $p2->id]) }}"
+                                                class="text-primary me-2">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                            <a  class="text-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p2->id}}" staff_id="{{$p2->id}}">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
 
                     @endfor
                 </div>

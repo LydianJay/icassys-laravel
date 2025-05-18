@@ -15,4 +15,14 @@ class Permission extends Model
         'user_id',
         'allowed'
     ]; 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function subModule()
+    {
+        return $this->belongsTo(SubModules::class, 'subm_id', 'subm_id');
+    }
 }

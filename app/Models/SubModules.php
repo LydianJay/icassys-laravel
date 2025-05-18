@@ -15,4 +15,14 @@ class SubModules extends Model
         'subm_name',
         'route'
     ];
+
+    public function module()
+    {
+        return $this->belongsTo(Modules::class, 'module_id', 'module_id');
+    }
+
+    public function defaultPermission()
+    {
+        return $this->hasOne(DefPermission::class, 'subm_id', 'subm_id');
+    }
 }

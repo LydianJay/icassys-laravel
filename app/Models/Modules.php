@@ -13,4 +13,10 @@ class Modules extends Model
         'module_id',
         'module_name',
     ];
+
+
+    public function subModules()
+    {
+        return $this->hasMany(SubModules::class, 'module_id', 'module_id');
+    }
 }

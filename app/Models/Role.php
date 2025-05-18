@@ -14,6 +14,11 @@ class Role extends Model
         'role_name',
     ];
 
+    public function defaultPermissions()
+    {
+        return $this->hasMany(DefPermission::class, 'role_id', 'role_id');
+    }
 
     
+        
 }

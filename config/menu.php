@@ -16,9 +16,7 @@ return [
             'Role' => [
                 'route' => 'designation'
             ],
-            'Permission' => [
-                'route' => 'under_dev'
-            ]
+           
             
         ],
     ],
@@ -31,9 +29,7 @@ return [
             'Students' => [
                 'route' => 'student'
             ],
-            // 'Enrollment' => [
-            //     'route' => 'under_dev'
-            // ],
+            
             
         ],
     ],
@@ -66,4 +62,18 @@ return [
         ],
     ],
 
+
+    [
+        'menu'      => 'Permission',
+        'icon'      => 'fa-solid fa-lock-open',
+        'submenu'   => [
+            'User Permission' => [
+                'route' => 'permission'
+            ],
+            
+            'Role Permission' => [
+                'route' => 'role_permission'
+            ],
+        ],
+    ],
 ];

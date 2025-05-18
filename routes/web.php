@@ -10,6 +10,8 @@ use App\Http\Controllers\Designation;
 use App\Http\Controllers\Maintenance;
 use App\Http\Controllers\Student;
 use App\Http\Controllers\Fees;
+use App\Http\Controllers\Permission;
+
 Route::get('/', [Site::class, 'index'])->name('home');
 Route::get('/login', [AuthCtrl::class, 'index'])->name('login');
 Route::post('/login', [AuthCtrl::class, 'login'])->name('login.post');
@@ -31,6 +33,12 @@ Route::middleware(['auth:web'])->group(function(){
     Route::post('/hr/designation/create', [HumanResource::class, 'designation_create'])->name('designation_create');
     Route::post('/hr/designation/edit', [HumanResource::class, 'designation_edit'])->name('designation_edit');
     Route::get('/hr/designation/delete', [HumanResource::class, 'designation_delete'])->name('designation_delete');
+
+
+    Route::get('/permission', [Permission::class, 'index'])->name('permission');
+    Route::get('/permission/role_permission', [Permission::class, 'role_permission'])->name('role_permission');
+    Route::get('/permission/role_permission_add', [Permission::class, 'role_permission_add'])->name('role_permission_add');
+    Route::get('/permission/role_permission_remove', [Permission::class, 'role_permission_remove'])->name('role_permission_remove');
 
 
     Route::get('/hr/staff', [HumanResource::class, 'staff'])->name('staff');
