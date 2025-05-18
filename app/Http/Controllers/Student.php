@@ -225,10 +225,7 @@ class Student extends Controller
             'sem'           => $request->sem,
             'guardian_id'   => $guardian->guardian_id,
         ]);
-        // Create student profile
         
-    
-        // Create guardian record
         
 
 
