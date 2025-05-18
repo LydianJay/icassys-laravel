@@ -35,7 +35,7 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/hr/designation/delete', [HumanResource::class, 'designation_delete'])->name('designation_delete');
 
 
-    Route::get('/permission', [Permission::class, 'index'])->name('permission');
+    Route::get('/permission', [Permission::class, 'userpermission'])->name('userpermission');
     Route::get('/permission/role_permission', [Permission::class, 'role_permission'])->name('role_permission');
     Route::get('/permission/role_permission_add', [Permission::class, 'role_permission_add'])->name('role_permission_add');
     Route::get('/permission/role_permission_remove', [Permission::class, 'role_permission_remove'])->name('role_permission_remove');

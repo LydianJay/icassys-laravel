@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Models\Modules;
-use App\Models\SubModules;
+use App\Models\User;
 use App\Models\DefPermission;
-
+use App\Models\Permission as PermissionModel;
 class Permission extends Controller
 {
-    public function index() {
+    public function userpermission(Request $request) {
+        $user_id = $request->input('id');
+
+        if($user_id == null || $user_id == '') {
+
+            return redirect()->route('staff');
+        }
+        
+
+        $data['user']   = User::with('permissions.subModule.module')->where('id', $user_id)->first();
+        $data['all']    = Modules::with('subModules')->get(); // all modules/submodules
 
 
-        return view('pages.permission.permission');
+        return view('pages.permission.userpermission', $data);
     }
 
     public function role_permission() {

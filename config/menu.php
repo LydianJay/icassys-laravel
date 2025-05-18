@@ -68,7 +68,7 @@ return [
         'icon'      => 'fa-solid fa-lock-open',
         'submenu'   => [
             'User Permission' => [
-                'route' => 'permission'
+                'route' => 'userpermission'
             ],
             
             'Role Permission' => [

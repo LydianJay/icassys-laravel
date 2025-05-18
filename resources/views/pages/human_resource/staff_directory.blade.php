@@ -38,8 +38,11 @@
                                             class="text-primary me-2">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
-                                        <a class="text-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p1->id}}" staff_id="{{$p1->id}}">
+                                        <a class="text-danger me-2" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p1->id}}" staff_id="{{$p1->id}}">
                                             <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                        <a class="text-info" href="{{ route('userpermission', ['id' => $p1->id]) }}">
+                                            <i class="fa-solid fa-key"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -63,8 +66,11 @@
                                                 class="text-primary me-2">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a  class="text-danger" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p2->id}}" staff_id="{{$p2->id}}">
+                                            <a class="text-danger me-2" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p2->id}}" staff_id="{{$p2->id}}">
                                                 <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                            <a class="text-info" href="{{ route('userpermission', ['id' => $p2->id]) }}">
+                                                <i class="fa-solid fa-key"></i>
                                             </a>
                                         </div>
                                     </div>
