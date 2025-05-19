@@ -6,7 +6,7 @@ use App\Http\Controllers\Site;
 use App\Http\Controllers\AuthCtrl;
 use App\Http\Controllers\CaptchaCtrl;
 use App\Http\Controllers\HumanResource;
-use App\Http\Controllers\Designation;
+use App\Http\Controllers\Registrar;
 use App\Http\Controllers\Maintenance;
 use App\Http\Controllers\Student;
 use App\Http\Controllers\Fees;
@@ -54,7 +54,7 @@ Route::middleware(['auth:web'])->group(function(){
     Route::post('/student/student_edit', [Student::class, 'student_edit'])->name('student_edit');
     Route::get('/student/student_delete', [Student::class, 'student_delete'])->name('student_delete');
    
-
+    Route::get('/registrar/registrar', [Registrar::class, 'registrar'])->name('registrar');
 
     Route::get('/fee/fee_type', [Fees::class, 'fee_type'])->name('fee_type');
     Route::post('/fee/fee_type_edit', [Fees::class, 'fee_type_edit'])->name('fee_type_edit');

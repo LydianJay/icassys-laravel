@@ -34,6 +34,17 @@ return [
         ],
     ],
 
+    [
+        'menu'      => 'Registrar',
+        'icon'      => 'fa-solid fa-table',
+        'submenu'   => [
+            'Admission' => [
+                'route' => 'registrar'
+            ],
+            
+            
+        ],
+    ],
 
     [
         'menu'      => 'Fees',

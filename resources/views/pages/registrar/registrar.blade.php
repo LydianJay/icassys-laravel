@@ -1,14 +1,14 @@
 <x-dashboard.basecomponent>
     <x-dashboard.cardcomponent>
-        <x-dashboard.cardheader title="Students">
-           
+        <x-dashboard.cardheader title="Registrar">
+
             <div class="row mt-3 align-items-center pb-2 border-bottom">
                 <div class="col">
-                    <a class="btn btn-sm btn-outline-success" href="{{route('student_create_view')}}">Admission
-                        <span><i class="fa-solid fa-plus"></i></span></a>
+                    <x-dashboard.cardsearchbar search_route="student" placeholder="Admission No."></x-dashboard.cardsearchbar>
                 </div>
                 <div class="col">
-                    <x-dashboard.cardsearchbar search_route="student" placeholder="Jane Doe"></x-dashboard.cardsearchbar>
+                    <x-dashboard.cardsearchbar search_route="student"
+                        placeholder="Jane Doe"></x-dashboard.cardsearchbar>
                 </div>
             </div>
         </x-dashboard.cardheader>
@@ -33,12 +33,11 @@
                                         <p class="mb-0 text-muted">{{ ucfirst($p1->category) }}</p>
                                     </div>
                                     <div class="ms-2">
-                                        <a href="{{ route('student_edit_view', ['id' => $p1->id]) }}" class="text-primary me-2">
-                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        <a href="{{ route('student_edit_view', ['id' => $p1->id]) }}"
+                                            class="me-2 btn btn-sm btn-outline-primary">
+                                            Select For Admission
                                         </a>
-                                        <a student_id="{{ $p1->id}}" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p1->id}}" href="{{ route('student_delete', ['id' => $p1->id]) }}" class="text-danger">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -57,10 +56,13 @@
                                             <p class="mb-0 text-muted">{{ ucfirst($p1->category) }}</p>
                                         </div>
                                         <div class="ms-2">
-                                            <a href="{{ route('student_edit_view', ['id' => $p2->id]) }}" class="text-primary me-2">
+                                            <a href="{{ route('student_edit_view', ['id' => $p2->id]) }}"
+                                                class="text-primary me-2">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </a>
-                                            <a student_id="{{ $p2->id}}" data-bs-toggle="modal" data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p2->id}}" href="{{ route('student_delete', ['id' => $p2->id]) }}" class="text-danger">
+                                            <a student_id="{{ $p2->id}}" data-bs-toggle="modal"
+                                                data-bs-target="#confirm_delete_modal" id="delete_btn_{{$p2->id}}"
+                                                href="{{ route('student_delete', ['id' => $p2->id]) }}" class="text-danger">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </div>
@@ -102,7 +104,7 @@
                 });
 
             @endforeach()
-            
+
         });
     </script>
 </x-dashboard.basecomponent>
