@@ -9,85 +9,90 @@
             </div>
     
             <!-- Student Info Panel -->
-            <div class="d-flex border rounded shadow-sm p-3 mt-4 bg-light">
-                <div class="me-4">
-                    <img src="{{ asset('storage/uploads/student/photos/' . $student->photo) }}" alt="Student Photo"
-                        width="80" height="80" class="rounded-5">
+            @if (isset($student))
+                <div class="d-flex border rounded shadow-sm p-3 mt-4 bg-light">
+                    <div class="me-4">
+                        <img src="{{ asset('storage/uploads/student/photos/' . $student->photo) }}" alt="Student Photo"
+                            width="80" height="80" class="rounded-5">
+                    </div>
+                    <div class="flex-grow-1">
+                        <table class="table table-sm table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <th class="border-0">Name</th>
+                                    <td class="border-0">{{ $student->fname . ' ' . $student->mname . ' ' . $student->lname }}
+                                    </td>
+                                    <th class="border-0">Admission No.</th>
+                                    <td class="border-0">{{ $student->admission_no }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date Of Birth</th>
+                                    <td>{{ $student->dob }}</td>
+                                    <th>Mobile Number</th>
+                                    <td>{{ $student->contactno }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="flex-grow-1">
-                    <table class="table table-sm table-striped mb-0">
-                        <tbody>
-                            <tr>
-                                <th class="border-0">Name</th>
-                                <td class="border-0">{{ $student->fname . ' ' . $student->mname . ' ' . $student->lname }}
-                                </td>
-                                <th class="border-0">Admission No.</th>
-                                <td class="border-0">{{ $student->admission_no }}</td>
-                            </tr>
-                            <tr>
-                                <th>Date Of Birth</th>
-                                <td>{{ $student->dob }}</td>
-                                <th>Mobile Number</th>
-                                <td>{{ $student->contactno }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @endif
+            
         </x-dashboard.cardheader>
     
         <!-- Fees Table + Bulk Pay -->
         <div class="card-body">
-            <form action="" method="POST">
-                @csrf
-    
-                <div class="d-flex justify-content-between align-items-center my-3">
-                    <button type="submit" class="btn btn-success btn-sm">
-                        <i class="fa-solid fa-money-bill me-1"></i>Pay Selected
-                    </button>
-                    <h6 class="mb-0">Student Fees</h6>
-                    
-                </div>
-    
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-sm">
-                        <thead class="table-light text-center">
-                            <tr>
-                                <th></th>
-                                <th>Fee</th>
-                                <th>Fees Code</th>
-                                <th>Status</th>
-                                <th>Amount</th>
-                                <th>Paid</th>
-                                <th>Balance</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($student_fees as $fee)
+            @if (isset($student_fees))
+                <form action="" method="POST">
+                    @csrf
+
+                    <div class="d-flex justify-content-between align-items-center my-3">
+                        <button type="submit" class="btn btn-success btn-sm">
+                            <i class="fa-solid fa-money-bill me-1"></i>Pay Selected
+                        </button>
+                        <h6 class="mb-0">Student Fees</h6>
+
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover table-sm">
+                            <thead class="table-light text-center">
                                 <tr>
-                                    <td class="text-center">
-                                        <input type="checkbox" name="fee_ids[]" value="{{ $fee->id }}" class="form-check-input">
-                                    </td>
-                                    <td class="text-center">{{ $fee->fee_type_name }}</td>
-                                    <td class="text-center">{{ $fee->fees_code }}</td>
-                                    <td class="text-center">
-                                        <span class="badge {{ $fee->amount > 0 ? 'bg-danger' : 'bg-success' }}">
-                                            {{ $fee->amount > 0 ? 'Unpaid' : 'Paid' }}
-                                        </span>
-                                    </td>
-                                    <td class="text-center">{{ number_format($fee->ammount, 2) }}</td>
-                                    <td class="text-center">{{ number_format($fee->ammount - $fee->amount, 2) }}</td>
-                                    <td class="text-center">{{ number_format($fee->amount, 2) }}</td>
-                                    <td class="text-center">
-                                        <a href="#" class="btn btn-sm btn-primary">Pay</a>
-                                    </td>
+                                    <th></th>
+                                    <th>Fee</th>
+                                    <th>Fees Code</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                    <th>Paid</th>
+                                    <th>Balance</th>
+                                    <th>Action</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </form>
+                            </thead>
+                            <tbody>
+                                @foreach ($student_fees as $fee)
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" name="fee_ids[]" value="{{ $fee->id }}" class="form-check-input">
+                                        </td>
+                                        <td class="text-center">{{ $fee->fee_type_name }}</td>
+                                        <td class="text-center">{{ $fee->fees_code }}</td>
+                                        <td class="text-center">
+                                            <span class="badge {{ $fee->amount > 0 ? 'bg-danger' : 'bg-success' }}">
+                                                {{ $fee->amount > 0 ? 'Unpaid' : 'Paid' }}
+                                            </span>
+                                        </td>
+                                        <td class="text-center">{{ number_format($fee->ammount, 2) }}</td>
+                                        <td class="text-center">{{ number_format($fee->ammount - $fee->amount, 2) }}</td>
+                                        <td class="text-center">{{ number_format($fee->amount, 2) }}</td>
+                                        <td class="text-center">
+                                            <a href="#" class="btn btn-sm btn-primary">Pay</a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            @endif
         </div>
     </x-dashboard.cardcomponent>
     

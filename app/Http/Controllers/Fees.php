@@ -199,7 +199,7 @@ class Fees extends Controller
     }
 
     public function assessment(Request $request) {
-
+        $data = [];
        
         if($request->input('id') != null || $request->input('id') != '') {
             $data['student'] = User::select('*', 'users.address as u_address')->join('student', 'student.user_id','=','id')
