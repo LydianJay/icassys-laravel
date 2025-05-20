@@ -88,6 +88,7 @@
                                             <th>Code</th>
                                             <th>Particulars</th>
                                             <th>Amount</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -96,7 +97,12 @@
                                                 <tr>
                                                     <td>{{ $f->fees_code}}</td>
                                                     <td>{{ $f->fee_type_name }}</td>
-                                                    <td>{{ number_format($f->ammount, 2) }}</td>
+                                                    <td>{{ number_format($f->amount, 2) }}</td>
+                                                    <td class="text-center">
+                                                        <a href="{{ route('remove_fee_user', array_merge(request()->query(), ['id' => $f->student_fee_id] ) ) }}" class="rounded bg-danger text-white btn btn-sm">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </a>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                         @else

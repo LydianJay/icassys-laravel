@@ -154,6 +154,11 @@ class Fees extends Controller
             ->orWhere('fees_code', 'LIKE', '%' . $search . '%')
             ->limit(15)
             ->get();
+
+            // $data['fees'] = FeeType::leftJoin('fee_group', 'fee_type.fee_type_id', '=', 'fee_group.fee_type_id')
+            // ->leftJoin('student_fees', 'fee_type.fee_type_id', '=', 'student_fees.fee_type_id')
+            // ->whereNull('student_fees.fee_type_id')
+            // ->get();
         }
         else {
             $data = FeeType::all();
@@ -168,15 +173,30 @@ class Fees extends Controller
 
         $active_ay = \App\Models\AcademicYear::select('academic_year_id')->where('is_active', '=', true)->first();
         
+        $count = StudentFees::where('student_id', '=', $student_id)
+        ->where('fee_type_id', '=', $fee)
+        ->where('academic_year_id', '=', $active_ay->academic_year_id)->count();
+
+        if($count > 0) {
+            return back()->with('status',['alert' => 'alert-danger', 'msg' => 'Fee Already Assigned!'] );
+        }
+
         StudentFees::create([
             'student_id'        => $student_id,
             'fee_type_id'       => $fee,
             'academic_year_id'  => $active_ay->academic_year_id,
+            'amount'           => FeeType::where('fee_type_id', '=', $fee)->first()->ammount,
         ]);
         return redirect()->route('assessment', ['id' => $user_id])->with('status',['alert' => 'alert-info', 'msg' => 'Fee Added!'] );
 
     }
 
+    public function remove_fee_user(Request $request) {
+        $id = $request->input('id');
+
+        StudentFees::destroy($id);
+        return back()->with('status',['alert' => 'alert-info', 'msg' => 'Fee Removed!'] );
+    }
 
     public function assessment(Request $request) {
 
@@ -195,9 +215,13 @@ class Fees extends Controller
             ->where('student_fees.student_id', '=', $data['student_id'])    
             ->get();
 
-            $data['total']          = $data['student_fees']->sum('ammount');
+            // dd($data['student_fees']);
+
+            $data['total']          = $data['student_fees']->sum('amount');
             // $data['academic_year']  = \App\Models\AcademicYear::select('academic_year_id', 'academic_year_name')->where('is_active', '=', true)->first();
             
+           
+
 
             // dd($data['student_fees']);
         }
@@ -205,7 +229,6 @@ class Fees extends Controller
        
 
 
-        $data['fees'] = FeeType::leftJoin('fee_group', 'fee_type.fee_type_id', '=', 'fee_group.fee_type_id');
 
     
 
@@ -213,5 +236,11 @@ class Fees extends Controller
     }
 
 
-    
+    public function collect_fees(Request $request) {
+       
+        
+        return view('pages.fees.collect_fees');
+    }
+
+
 }

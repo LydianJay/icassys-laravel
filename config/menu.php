@@ -54,7 +54,7 @@ return [
                 'route' => 'assessment'
             ],
             'Collect Fees' => [
-                'route' => 'under_dev'
+                'route' => 'collect_fees'
             ],
             'Fees Type' => [
                 'route' => 'fee_type'

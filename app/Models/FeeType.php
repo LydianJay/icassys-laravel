@@ -21,4 +21,10 @@ class FeeType extends Model
         // One FeeType can have many FeeGroups (if your logic allows it)
         return $this->hasMany(FeeGroup::class, 'fee_type_id', 'fee_type_id');
     }
+
+    public function studentFees()
+    {
+        return $this->hasMany(StudentFees::class , 'fee_type_id', 'fee_type_id');
+    }
+
 }

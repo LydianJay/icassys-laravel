@@ -71,6 +71,8 @@ Route::middleware(['auth:web'])->group(function(){
 
     Route::get('/fee/assessment', [Fees::class, 'assessment'])->name('assessment');
     Route::get('/fee/add_fee_user', [Fees::class, 'add_fee_user'])->name('add_fee_user');
+    Route::get('/fee/remove_fee_user', [Fees::class, 'remove_fee_user'])->name('remove_fee_user');
+    Route::get('/fee/collect_fees', [Fees::class, 'collect_fees'])->name('collect_fees');
     //API
     Route::get('/fee/fees_get', [Fees::class, 'fees_get'])->name('fees_get');
 });
