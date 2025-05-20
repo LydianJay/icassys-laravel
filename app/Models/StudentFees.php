@@ -16,4 +16,9 @@ class StudentFees extends Model
         'academic_year_id',
         'amount',
     ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id', 'student_id');
+    }
 }

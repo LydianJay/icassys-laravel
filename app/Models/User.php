@@ -67,4 +67,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Permission::class, 'user_id', 'id');
     }
+    public function student()
+    {
+        return $this->hasOne(student::class, 'user_id', 'id');
+    }
 }

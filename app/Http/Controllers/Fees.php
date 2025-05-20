@@ -215,15 +215,11 @@ class Fees extends Controller
             ->where('student_fees.student_id', '=', $data['student_id'])    
             ->get();
 
-            // dd($data['student_fees']);
 
             $data['total']          = $data['student_fees']->sum('amount');
             // $data['academic_year']  = \App\Models\AcademicYear::select('academic_year_id', 'academic_year_name')->where('is_active', '=', true)->first();
             
-           
 
-
-            // dd($data['student_fees']);
         }
         
        
@@ -237,9 +233,26 @@ class Fees extends Controller
 
 
     public function collect_fees(Request $request) {
-       
-        
-        return view('pages.fees.collect_fees');
+        $data = [];
+        $student_id = $request->input('student_id');
+
+        if($student_id != null && $student_id != '') {
+            $data['student'] = User::join('student', 'student.user_id','=','id')
+            ->where('student.student_id', '=', $student_id)
+            ->first();
+
+            
+           
+           
+            $data['student_fees'] = StudentFees::leftJoin('fee_type', 'student_fees.fee_type_id', '=', 'fee_type.fee_type_id')
+            ->where('student_fees.student_id', '=', $student_id)    
+            ->get();
+
+            // dd($data['student_fees']);
+        }
+
+
+        return view('pages.fees.collect_fees', $data);
     }
 
 

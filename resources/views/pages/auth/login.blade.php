@@ -5,7 +5,7 @@
         <div class="col-4 px-4 mt-5 py-5">
             
             <div class="px-5 mt-5">
-                <img src="http://localhost/icassys/uploads/school_content/admin_logo/1.png" style="width: auto; height: 30px;">
+                <img src="{{ asset('assets/school_content/admin_logo/1.png') }}" style="width: auto; height: 30px;">
             </div>
             <div class="px-5 mt-5">
                 <form action="{{ route('login.post') }}" method="POST" class="needs-validation">

@@ -18,4 +18,19 @@ class student extends Model
         'lvl',
         'sem',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
+    public function guardian()
+    {
+        return $this->belongsTo(Guardian::class, 'guardian_id', 'guardian_id');
+    }
+    public function studentFees()
+    {
+        return $this->hasMany(StudentFees::class, 'student_id', 'student_id');
+    }
+    
 }
