@@ -14,6 +14,6 @@ class StudentFees extends Model
         'student_id',
         'fee_type_id',
         'academic_year_id',
-     
+        'amount',
     ];
 }
