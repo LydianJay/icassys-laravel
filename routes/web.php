@@ -53,6 +53,9 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/student/student_edit_view', [Student::class, 'student_edit_view'])->name('student_edit_view');
     Route::post('/student/student_edit', [Student::class, 'student_edit'])->name('student_edit');
     Route::get('/student/student_delete', [Student::class, 'student_delete'])->name('student_delete');
+    // APIS
+    Route::get('/student/student_search', [Student::class, 'student_search'])->name('student_search');
+    Route::get('/student/student_get', [Student::class, 'student_get'])->name('student_get');
    
     Route::get('/registrar/registrar', [Registrar::class, 'registrar'])->name('registrar');
 
@@ -64,4 +67,10 @@ Route::middleware(['auth:web'])->group(function(){
     Route::get('/fee/fee_group', [Fees::class, 'fee_group'])->name('fee_group');
     Route::post('/fee/add_fee', [Fees::class, 'add_fee'])->name('add_fee');
     Route::get('/fee/remove_fee', [Fees::class, 'remove_fee'])->name('remove_fee');
+
+
+    Route::get('/fee/assessment', [Fees::class, 'assessment'])->name('assessment');
+    Route::get('/fee/add_fee_user', [Fees::class, 'add_fee_user'])->name('add_fee_user');
+    //API
+    Route::get('/fee/fees_get', [Fees::class, 'fees_get'])->name('fees_get');
 });

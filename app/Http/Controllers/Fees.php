@@ -7,7 +7,8 @@ use App\Models\FeeType;
 use App\Models\FeeGroup;
 use App\Models\ClassMaster;
 use function Laravel\Prompts\search;
-
+use App\Models\User;
+use App\Models\StudentFees;
 class Fees extends Controller
 {
 
@@ -143,4 +144,74 @@ class Fees extends Controller
         FeeGroup::destroy($id);
         return redirect()->route('fee_group')->with('status',['alert' => 'alert-info', 'msg' => 'Fee Removed!'] );
     }
+
+
+    public function fees_get(Request $request) {
+        $search = $request->input('search');
+
+        if($search != null && $search != '') {
+            $data = FeeType::where('fee_type_name', 'LIKE', '%' . $search . '%')
+            ->orWhere('fees_code', 'LIKE', '%' . $search . '%')
+            ->limit(15)
+            ->get();
+        }
+        else {
+            $data = FeeType::all();
+        }
+        return response()->json($data);
+    }
+
+    public function add_fee_user(Request $request) {
+        $student_id = $request->input('id');
+        $fee        = $request->input('fee');
+        $user_id    = $request->input('user_id');
+
+        $active_ay = \App\Models\AcademicYear::select('academic_year_id')->where('is_active', '=', true)->first();
+        
+        StudentFees::create([
+            'student_id'        => $student_id,
+            'fee_type_id'       => $fee,
+            'academic_year_id'  => $active_ay->academic_year_id,
+        ]);
+        return redirect()->route('assessment', ['id' => $user_id])->with('status',['alert' => 'alert-info', 'msg' => 'Fee Added!'] );
+
+    }
+
+
+    public function assessment(Request $request) {
+
+       
+        if($request->input('id') != null || $request->input('id') != '') {
+            $data['student'] = User::select('*', 'users.address as u_address')->join('student', 'student.user_id','=','id')
+            ->where('users.id', '=', $request->input('id'))
+            ->first();
+
+            $data['student_id']     = $data['student']->student_id;
+            $data['user_id']        = $data['student']->id;
+
+            
+
+            $data['student_fees'] = StudentFees::leftJoin('fee_type', 'student_fees.fee_type_id', '=', 'fee_type.fee_type_id')
+            ->where('student_fees.student_id', '=', $data['student_id'])    
+            ->get();
+
+            $data['total']          = $data['student_fees']->sum('ammount');
+            // $data['academic_year']  = \App\Models\AcademicYear::select('academic_year_id', 'academic_year_name')->where('is_active', '=', true)->first();
+            
+
+            // dd($data['student_fees']);
+        }
+        
+       
+
+
+        $data['fees'] = FeeType::leftJoin('fee_group', 'fee_type.fee_type_id', '=', 'fee_group.fee_type_id');
+
+    
+
+        return view('pages.fees.assessment', $data);
+    }
+
+
+    
 }

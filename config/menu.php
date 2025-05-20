@@ -50,6 +50,9 @@ return [
         'menu'      => 'Fees',
         'icon'      => 'fa-solid fa-coins',
         'submenu'   => [
+            'Assessment' => [
+                'route' => 'assessment'
+            ],
             'Collect Fees' => [
                 'route' => 'under_dev'
             ],
